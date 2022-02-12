@@ -10,7 +10,7 @@
         <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/menu">
           Menu
         </router-link>
-        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/qrcode">
+        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/barcode">
           Barcode
         </router-link>
       </div>
