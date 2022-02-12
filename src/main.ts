@@ -19,7 +19,6 @@ import 'virtual:windi-devtools'
 const routes = setupLayouts(generatedRoutes)
 Amplify.configure(awsConfig)
 
-// https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
   App,
   { routes, base: import.meta.env.BASE_URL },

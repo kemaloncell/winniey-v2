@@ -1,7 +1,15 @@
 <script setup lang="ts">
-// https://github.com/vueuse/head
-// you can use this to manipulate the document head in any components,
-// they will be rendered correctly in the html results with vite-ssg
+if (window?.location) {
+  const host = window.location.host
+  const parts = host.split('.')
+  const domainLength = 3
+  if (parts.length === domainLength) {
+    const username = parts[0]
+    const router = useRouter()
+
+    router.push(`/${username}/menu`)
+  }
+}
 useHead({
   title: 'Winniey ',
   meta: [
