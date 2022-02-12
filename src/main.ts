@@ -2,7 +2,9 @@
 import { ViteSSG } from 'vite-ssg'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
+import { Amplify } from '@aws-amplify/core'
 import App from './App.vue'
+import awsConfig from './aws-exports'
 
 // windicss layers
 import 'virtual:windi-base.css'
@@ -15,6 +17,7 @@ import 'virtual:windi-utilities.css'
 import 'virtual:windi-devtools'
 
 const routes = setupLayouts(generatedRoutes)
+Amplify.configure(awsConfig)
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(
