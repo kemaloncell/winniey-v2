@@ -7,7 +7,6 @@ dist-ssr
 node_modules
 .idea/
 *.log
-yarn.lock
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
