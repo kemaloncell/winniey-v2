@@ -79,7 +79,7 @@ const props = defineProps({
   },
   selectedMenuItem: {
     type: Object,
-    required: true,
+    default: () => ({}),
   },
 })
 

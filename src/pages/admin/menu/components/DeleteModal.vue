@@ -32,7 +32,7 @@ const props = defineProps({
   },
   selectedCategory: {
     type: Object,
-    required: true,
+    default: () => ({}),
   },
 })
 

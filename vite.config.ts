@@ -19,9 +19,16 @@ const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
 export default defineConfig({
   resolve: {
-    alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
-    },
+    alias: [
+      {
+        find: './runtimeConfig',
+        replacement: './runtimeConfig.browser',
+      },
+      {
+        find: '~/',
+        replacement: `${path.resolve(__dirname, 'src')}/`,
+      },
+    ],
   },
   plugins: [
     Vue({
@@ -147,7 +154,6 @@ export default defineConfig({
   },
 
   define: {
-    'global': {},
     'process.env.NODE_DEBUG': JSON.stringify(''),
   },
 
