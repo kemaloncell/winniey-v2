@@ -2,7 +2,6 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { DataStore, SortDirection } from '@aws-amplify/datastore'
 import NProgress from 'nprogress'
 import { Business, Menu, MenuCategory, MenuItem } from '~/models'
-import { useAuthStore } from '~/stores/auth'
 
 export const useUserMenu = defineStore({
   id: 'userMenu',
@@ -62,7 +61,8 @@ export const useUserMenu = defineStore({
       NProgress.start()
       const { businessUsername } = payload
 
-      const currentBusiness = await DataStore.query(Business, business =>
+      let currentBusiness
+      currentBusiness = await DataStore.query(Business, business =>
         business.username('eq', businessUsername),
       )
 

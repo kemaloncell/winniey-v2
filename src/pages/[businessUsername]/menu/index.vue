@@ -15,6 +15,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import { Hub } from '@aws-amplify/core'
+import { DataStore } from '@aws-amplify/datastore'
 import { useUserMenu } from '~/stores/user'
 
 const route = useRoute()
@@ -32,7 +34,19 @@ const isMenuDropDownVisible = computed(() => {
   return menu.getSelectedMenu?.id
 })
 
-menu.fetchMenu({
-  businessUsername
+DataStore.start()
+const listener = Hub.listen('datastore', async(hubData) => {
+  const { event, data } = hubData.payload
+  if (event === 'modelSynced') {
+    if (!data.isFullSync && data.isDeltaSync)
+      getMenu()
+  }
+  if (event === 'ready')
+    getMenu()
 })
+
+const getMenu = async() => {
+  listener()
+  await menu.fetchMenu({ businessUsername })
+}
 </script>
