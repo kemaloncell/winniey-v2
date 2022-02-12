@@ -24,7 +24,7 @@ const login = async() => {
   if (status === 'UserNotConfirmedException')
     showConfirmation.value = true
   else if (status === true)
-    router.push('/')
+    router.push('/admin/menu')
 }
 
 const emailConfirmed = () => {
@@ -90,3 +90,7 @@ const emailConfirmed = () => {
     </div>
   </div>
 </template>
+<route lang="yaml">
+meta:
+  layout: auth
+</route>

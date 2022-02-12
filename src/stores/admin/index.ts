@@ -1,6 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { DataStore, SortDirection } from '@aws-amplify/datastore'
 import { Storage } from '@aws-amplify/storage'
+import NProgress from 'nprogress'
 import { Menu, MenuCategory, MenuItem } from '~/models'
 import { useAuthStore } from '~/stores/auth'
 
@@ -84,6 +85,7 @@ export const useAdminMenu = defineStore({
       if (!businessID)
         return
 
+      NProgress.start()
       const menus = await DataStore.query(Menu, menuItem =>
         menuItem.businessID('eq', businessID),
       )
@@ -123,6 +125,7 @@ export const useAdminMenu = defineStore({
           state.menu = JSON.parse(JSON.stringify(menu))
         })
 
+        NProgress.done()
         return this.menu
       }
     },
@@ -187,7 +190,7 @@ export const useAdminMenu = defineStore({
       if (result) {
         this.$patch((state) => {
           state.menu.push({
-            category: result,
+            category: JSON.parse(JSON.stringify(result)),
             items: [],
           })
         })
@@ -213,7 +216,7 @@ export const useAdminMenu = defineStore({
           if (!category?.items)
             category.items = []
 
-          category.items.push(result)
+          category.items.push(JSON.parse(JSON.stringify(result)))
         })
       }
       return result

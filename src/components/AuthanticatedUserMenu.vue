@@ -26,12 +26,13 @@ const onClickLogin = () => {
       class="avatar cursor-pointer"
       @click="onClickUserButton"
     >
-      <div class="rounded-full w-10 h-10 m-1 ">
+      <div class="btn btn-circle p-3">
+        <carbon-study-next class="inline-block" />
         <!-- <img src="https://i.pravatar.cc/500?img=32" /> -->
       </div>
       <ul
         v-if="showMenu"
-        class="menu p-4 shadow-lg bg-base-200 rounded-box absolute right-0 mt-8 z-10"
+        class="menu p-4 shadow-lg bg-base-200 rounded-box absolute right-0 mt-15 z-10"
       >
         <li>
           <a>
@@ -39,12 +40,12 @@ const onClickLogin = () => {
           </a>
         </li>
         <li @click="onLogout">
-          <a> Logout </a>
+          <a> Çıkış Yap </a>
         </li>
       </ul>
     </div>
     <div v-else class="flex items-stretch" @click="onClickLogin">
-      <a class="btn btn-ghost btn-sm rounded-btn"> Login </a>
+      <a class="btn btn-ghost btn-sm rounded-btn"> Giriş Yap </a>
     </div>
   </div>
 </template>

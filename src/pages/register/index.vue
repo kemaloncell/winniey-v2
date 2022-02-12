@@ -59,8 +59,12 @@ const emailConfirmed = () => {
         <input v-model="signUpUser.password" type="password" placeholder="Şifre" class="input input-bordered">
       </div>
       <div class="form-control mt-6">
-        <input type="button" value="Kayıt Ol" class="btn btn-primary" :disabled="loading" @click="signUp">
+        <input type="button" value="Kayıt Ol" class="btn btn-primary" :disabled="loading" @click="signUp" @keydown.enter="signUp">
       </div>
     </div>
   </div>
 </template>
+<route lang="yaml">
+meta:
+  layout: auth
+</route>

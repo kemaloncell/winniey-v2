@@ -14,6 +14,7 @@ declare module 'vue' {
     CarbonPhone: typeof import('~icons/carbon/phone')['default']
     CarbonRequestQuote: typeof import('~icons/carbon/request-quote')['default']
     CarbonSettings: typeof import('~icons/carbon/settings')['default']
+    CarbonStudyNext: typeof import('~icons/carbon/study-next')['default']
     CarbonTrashCan: typeof import('~icons/carbon/trash-can')['default']
     CarbonWarning: typeof import('~icons/carbon/warning')['default']
     CarbonWifi: typeof import('~icons/carbon/wifi')['default']
