@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="navbar-end">
-      selamx
+      <authanticated-user-menu />
     </div>
   </div>
 </template>

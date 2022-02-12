@@ -146,6 +146,11 @@ export default defineConfig({
     },
   },
 
+  define: {
+    'global': {},
+    'process.env.NODE_DEBUG': JSON.stringify(''),
+  },
+
   // https://github.com/antfu/vite-ssg
   ssgOptions: {
     script: 'async',

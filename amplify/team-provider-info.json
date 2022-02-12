@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-winniey-staging-125556-authRole",
+      "UnauthRoleArn": "arn:aws:iam::780851242871:role/amplify-winniey-staging-125556-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::780851242871:role/amplify-winniey-staging-125556-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-winniey-staging-125556-deployment",
+      "UnauthRoleName": "amplify-winniey-staging-125556-unauthRole",
+      "StackName": "amplify-winniey-staging-125556",
+      "StackId": "arn:aws:cloudformation:us-east-1:780851242871:stack/amplify-winniey-staging-125556/a445b740-7b82-11ec-9731-0a6448fecb99",
+      "AmplifyAppId": "d2iie9fdmnebxs"
+    }
+  }
+}

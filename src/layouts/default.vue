@@ -1,12 +1,12 @@
 <template>
-  <Header />
-  <main class="px-4 py-10 text-center">
-    <router-view />
-    <Footer />
-    <div class="mt-5 mx-auto text-center">
-      [Default Layout]
+  <div>
+    <Header />
+    <div class="flex justify-center">
+      <div class="flex-1 max-w-7xl mx-2 md:mx-0">
+        <router-view />
+      </div>
     </div>
-  </main>
+  </div>
 </template>
 <script>
 

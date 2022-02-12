@@ -1,8 +1,9 @@
 import { computed, ref } from 'vue'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { Auth, CognitoUser } from '@aws-amplify/auth'
+import type { CognitoUser } from '@aws-amplify/auth'
+import { Auth } from '@aws-amplify/auth'
 import { DataStore } from '@aws-amplify/datastore'
-import { Business } from '~/src/models'
+import { Business } from '~/models'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref < CognitoUser > ({})
@@ -33,8 +34,8 @@ export const useAuthStore = defineStore('auth', () => {
   async function setCurrentUser() {
     try {
       user.value = await Auth.currentAuthenticatedUser()
-
-      await setCurrentBusiness()
+      if (user.value)
+        await setCurrentBusiness()
     }
     catch {}
   }
