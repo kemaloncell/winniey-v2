@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  selam
+
 </template>

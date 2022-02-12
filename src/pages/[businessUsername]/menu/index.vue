@@ -18,6 +18,7 @@
 import { Hub } from '@aws-amplify/core'
 import { DataStore } from '@aws-amplify/datastore'
 import { useUserMenu } from '~/stores/user'
+import NProgress from "nprogress";
 
 const route = useRoute()
 const { businessUsername } = route.params
@@ -33,7 +34,7 @@ const isCollapseOpen = computed(() => {
 const isMenuDropDownVisible = computed(() => {
   return menu.getSelectedMenu?.id
 })
-
+NProgress.start()
 DataStore.start()
 const listener = Hub.listen('datastore', async(hubData) => {
   const { event, data } = hubData.payload

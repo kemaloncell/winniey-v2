@@ -1,5 +1,4 @@
 <template>
-  user
 </template>
 <route lang="yaml">
 meta:

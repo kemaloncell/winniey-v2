@@ -1,5 +1,4 @@
 <template>
-  admin
 </template>
 <route lang="yaml">
 meta:
