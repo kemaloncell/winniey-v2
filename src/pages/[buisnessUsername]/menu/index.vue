@@ -1,5 +1,5 @@
 <template>
-user
+userrr
 </template>
 <route lang="yaml">
 meta:
