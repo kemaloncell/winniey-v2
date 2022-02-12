@@ -2,8 +2,6 @@
 .vite-ssg-dist
 .vite-ssg-temp
 *.local
-dist
-dist-ssr
 node_modules
 .idea/
 *.log
@@ -13,8 +11,10 @@ amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data
+amplify/backend/amplify-meta.json
 amplify/backend/.temp
 build/
+dist/
 node_modules/
 amplifytools.xcconfig
 .secret-*

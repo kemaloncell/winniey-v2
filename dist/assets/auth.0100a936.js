@@ -1,0 +1,1 @@
+import{_ as o}from"./app.6a8a6329.js";import{m as s,o as r,f as c,g as e,k as n}from"./vendor.e2bcb249.js";const a={},_={class:"flex justify-center items-center h-screen"},i={class:"flex-1 max-w-4xl"};function l(f,m){const t=s("router-view");return r(),c("div",null,[e("div",_,[e("div",i,[n(t)])])])}var p=o(a,[["render",l]]);export{p as default};
