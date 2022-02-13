@@ -17,8 +17,8 @@
 <script setup lang="ts">
 import { Hub } from '@aws-amplify/core'
 import { DataStore } from '@aws-amplify/datastore'
+import NProgress from 'nprogress'
 import { useUserMenu } from '~/stores/user'
-import NProgress from "nprogress";
 
 const route = useRoute()
 const { businessUsername } = route.params
@@ -34,20 +34,6 @@ const isCollapseOpen = computed(() => {
 const isMenuDropDownVisible = computed(() => {
   return menu.getSelectedMenu?.id
 })
-NProgress.start()
-DataStore.start()
-const listener = Hub.listen('datastore', async(hubData) => {
-  const { event, data } = hubData.payload
-  if (event === 'modelSynced') {
-    if (!data.isFullSync && data.isDeltaSync)
-      getMenu()
-  }
-  if (event === 'ready')
-    getMenu()
-})
 
-const getMenu = async() => {
-  listener()
-  await menu.fetchMenu({ businessUsername })
-}
+menu.fetchMenu({ businessUsername })
 </script>
