@@ -49,6 +49,7 @@ export declare class Menu {
   readonly images?: (string | null)[];
   readonly notifications?: (string | null)[];
   readonly isDefault?: boolean;
+  readonly description?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Menu, MenuMetaData>);
@@ -112,7 +113,6 @@ export declare class Business {
   readonly username?: string;
   readonly address?: string;
   readonly phone?: string;
-  readonly description?: string;
   readonly Menus?: (Menu | null)[];
   readonly additional?: (string | null)[];
   readonly name?: string;
