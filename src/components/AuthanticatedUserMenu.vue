@@ -37,8 +37,7 @@ const onClickLogin = () => {
     >
       <div class="btn btn-circle p-3">
         <carbon-study-next class="inline-block" />
-        <!-- <img src="https://i.pravatar.cc/500?img=32" /> -->
-      </div>
+        </div>
       <ul
         v-if="showMenu"
         class="menu p-4 shadow-lg bg-base-200 rounded-box absolute right-0 mt-15 z-10"

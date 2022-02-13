@@ -1,7 +1,7 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      Menü Ayarları
+      İşetme Ayarları
     </template>
     <template #body>
       <div class="form-control">
