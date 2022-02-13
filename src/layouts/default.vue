@@ -16,12 +16,10 @@
 import { DataStore } from '@aws-amplify/datastore'
 import { Hub } from '@aws-amplify/core'
 
+const router = useRouter()
 const ready = ref(false)
 
-const setReady = () => {
-  listener()
-  ready.value = true
-}
+const { options } = router
 
 DataStore.start()
 const listener = Hub.listen('datastore', async(hubData) => {
@@ -33,6 +31,14 @@ const listener = Hub.listen('datastore', async(hubData) => {
   if (event === 'ready')
     setReady()
 })
+
+const setReady = () => {
+  listener()
+  ready.value = true
+}
+if (options?.history?.state?.forward)
+  setReady()
+
 </script>
 <style scoped>
 .loader {

@@ -13,26 +13,24 @@
               >
             </div>
           </div>
-          <div>
-            <span class="card-title mb-8">{{ menuItemData.name }}</span>
+          <div class="flex flex-col items-left">
+            <span class="card-title">{{ menuItemData.name }}</span>
             <p
               v-if="menuItemData.description"
               class="text-base-content text-opacity-40"
             >
               {{ menuItemData.description }}
             </p>
+            <div
+              v-if="menuItemData.price"
+              class="font-bold badge badge-sm badge-outline p-2 w-16 mt-2"
+            >
+              {{ menuItemData.price }} {{ getCurrency(menuItemData.currency).symbol }}
+            </div>
           </div>
           <div class="flex flex-1 justify-end">
-            <div class="flex flex-col items-center gap-4">
-              <div
-                v-if="menuItemData.price"
-                class="card-title badge badge-xs badge-outline p-2 w-20"
-              >
-                {{ menuItemData.price }} {{ menuItemData.currency }}
-              </div>
-              <div class="flex flex-col items-center gap-1 md:flex-row">
-                <slot name="actions" />
-              </div>
+            <div class="flex flex-col items-center gap-1 md:flex-row">
+              <slot name="actions" />
             </div>
           </div>
         </div>
@@ -41,6 +39,8 @@
   </div>
 </template>
 <script setup>
+import { useCurrency } from '~/composables'
+
 const props = defineProps({
   menuItemData: {
     type: Object,
@@ -48,10 +48,13 @@ const props = defineProps({
   },
 })
 
+const { getCurrency } = useCurrency()
+
 const menuItemImage = computed(() => {
   const { image } = props.menuItemData
   if (!image)
     return false
   return `https://winniey-storage-d2iie9fdmnebxs125556-staging.s3.amazonaws.com/public/${image}`
 })
+
 </script>
