@@ -151,6 +151,7 @@ export const useAdminMenu = defineStore({
       const result = await DataStore.save(
         Menu.copyOf(original, (updated) => {
           updated.name = payload.update.name
+          updated.description = payload.update.description
         }),
       )
 
@@ -158,6 +159,7 @@ export const useAdminMenu = defineStore({
         this.$patch((state) => {
           const menu = state.menus.find(menu => menu.id === payload.menu.id)
           menu.name = payload.update.name
+          menu.description = payload.update.description
         })
       }
     },

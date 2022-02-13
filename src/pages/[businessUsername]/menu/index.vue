@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BusinessCard v-if="businessInfo" :business-info="businessInfo" />
+    <BusinessCard v-if="businessInfo" />
     <div class="flex flex-row mt-4 justify-between">
       <menu-search class="md:flex-1 md:mr-4" />
       <user-menu-dropdown />

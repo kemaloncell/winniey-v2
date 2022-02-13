@@ -15,14 +15,15 @@
           class="input input-bordered"
         >
         <div class="form-control mt-4">
-          <label class="cursor-pointer label">
-            <span class="label-text">Varsayılan Menü</span>
-            <input
-              type="checkbox"
-              checked="checked"
-              class="toggle toggle-primary"
-            >
+          <label class="label">
+            <span class="label-text">İşletme Açıklaması</span>
           </label>
+          <input
+              v-model="menu.description"
+              type="text"
+              placeholder="İşletme açıklaması."
+              class="input input-bordered"
+          >
         </div>
       </div>
     </template>
@@ -69,6 +70,7 @@ const addMenu = async() => {
     menu: menu.value,
     update: {
       name: menu.value.name,
+      description: menu.value.description,
     },
   })
 
