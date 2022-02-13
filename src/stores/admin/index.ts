@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { DataStore, SortDirection } from '@aws-amplify/datastore'
 import { Storage } from '@aws-amplify/storage'
 import NProgress from 'nprogress'
-import { Menu, MenuCategory, MenuItem } from '~/models'
+import { Business, Menu, MenuCategory, MenuItem } from '~/models'
 import { useAuthStore } from '~/stores/auth'
 
 export const useAdminMenu = defineStore({

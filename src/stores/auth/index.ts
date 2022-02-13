@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
       Business,
       businessItem => businessItem.owner('eq', user.value?.username),
     )
-    business.value = businessResult[0] || {}
+    business.value = JSON.parse(JSON.stringify(businessResult[0])) || {}
   }
   async function setCurrentUser() {
     try {
@@ -89,8 +89,27 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function updateBusiness(payload) {
+    console.log('updateBusiness', payload)
+    const original = await DataStore.query(Business, payload.businessInfo.id)
+    const result = await DataStore.save(
+      Business.copyOf(original, (updated) => {
+        Object.entries(payload.update).forEach(([key, value]) => {
+          updated[key] = value
+        })
+      }),
+    )
+
+    if (result) {
+      Object.entries(payload.update).forEach(([key, value]) => {
+        business.value[key] = value
+      })
+    }
+  }
+
   return {
     setCurrentUser,
+    updateBusiness,
     signUp,
     confirmEmail,
     login,
