@@ -17,6 +17,10 @@ export enum MenuItemRating {
 
 
 
+type BusinessLikeMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type MenuItemLikeMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -43,6 +47,17 @@ type UserMetaData = {
 
 type BusinessMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class BusinessLike {
+  readonly id: string;
+  readonly userID: string;
+  readonly businessID: string;
+  readonly status?: boolean;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<BusinessLike, BusinessLikeMetaData>);
+  static copyOf(source: BusinessLike, mutator: (draft: MutableModel<BusinessLike, BusinessLikeMetaData>) => MutableModel<BusinessLike, BusinessLikeMetaData> | void): BusinessLike;
 }
 
 export declare class MenuItemLike {
@@ -79,6 +94,7 @@ export declare class MenuCategory {
   readonly menuID: string;
   readonly topDescriptiom?: string;
   readonly bottomDescription?: string;
+  readonly order?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuCategory, MenuCategoryMetaData>);
@@ -98,6 +114,7 @@ export declare class MenuItem {
   readonly customPriceSymbol?: string;
   readonly MenuItemLikes?: (MenuItemLike | null)[];
   readonly likeCount?: string;
+  readonly order?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuItem, MenuItemMetaData>);
@@ -124,6 +141,7 @@ export declare class User {
   readonly description?: string;
   readonly owner?: string;
   readonly MenuItemLikes?: (MenuItemLike | null)[];
+  readonly BusinessLikes?: (BusinessLike | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -141,6 +159,8 @@ export declare class Business {
   readonly owner?: string;
   readonly wifi?: string;
   readonly logo?: string;
+  readonly BusinessLikes?: (BusinessLike | null)[];
+  readonly likeCount?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Business, BusinessMetaData>);
