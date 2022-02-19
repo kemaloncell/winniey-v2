@@ -25,12 +25,11 @@
           class="input input-bordered"
         >
       </div>
-
-      <label class="label">
-        <span class="label-text">Fiyat</span>
-      </label>
       <div class="flex gap-4">
         <div>
+          <label class="label">
+            <span class="label-text">Fiyat</span>
+          </label>
           <input
             v-model="menuItemPrice"
             type="text"
@@ -39,6 +38,9 @@
           >
         </div>
         <div>
+          <label class="label">
+            <span class="label-text">Para Birimi</span>
+          </label>
           <select
             v-model="menuItemCurrency"
             class="select w-full select-bordered"
@@ -51,6 +53,17 @@
               {{ currency }}
             </option>
           </select>
+        </div>
+        <div>
+          <label class="label">
+            <span class="label-text">Sembol</span>
+          </label>
+          <input
+            v-model="menuItemCustomPriceSymbol"
+            type="text"
+            placeholder="$, €, £"
+            class="input input-bordered w-20"
+          >
         </div>
       </div>
     </template>
@@ -89,6 +102,7 @@ const menuItemName = ref('')
 const menuItemDesc = ref('')
 const menuItemPrice = ref('')
 const menuItemCurrency = ref('')
+const menuItemCustomPriceSymbol = ref('')
 const menuItemCureencies = ['TRY', 'USD', 'ROUBLE', 'EUR']
 const isSaveButtonDisabled = ref(false)
 
@@ -96,6 +110,7 @@ watchEffect(() => (menuItemName.value = props.selectedMenuItem?.name))
 watchEffect(() => (menuItemDesc.value = props.selectedMenuItem?.description))
 watchEffect(() => (menuItemPrice.value = props.selectedMenuItem?.price))
 watchEffect(() => (menuItemCurrency.value = props.selectedMenuItem?.currency))
+watchEffect(() => (menuItemCustomPriceSymbol.value = props.selectedMenuItem?.customPriceSymbol))
 
 watchEffect(() => {
   if (menuItemName.value?.length > 0)
@@ -113,6 +128,7 @@ const updateMenuItem = async() => {
       description: menuItemDesc.value,
       price: parseFloat(menuItemPrice.value),
       currency: menuItemCurrency.value,
+      customPriceSymbol: menuItemCustomPriceSymbol.value,
     },
     menuItem: props.selectedMenuItem,
   })

@@ -1,5 +1,96 @@
 export const schema = {
     "models": {
+        "MenuItemLike": {
+            "name": "MenuItemLike",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "menuitemID": {
+                    "name": "menuitemID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "MenuItemLikes",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byMenuItem",
+                        "fields": [
+                            "menuitemID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Menu": {
             "name": "Menu",
             "fields": {
@@ -63,6 +154,13 @@ export const schema = {
                 },
                 "description": {
                     "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bottomDescription": {
+                    "name": "bottomDescription",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -155,6 +253,20 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "topDescriptiom": {
+                    "name": "topDescriptiom",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "bottomDescription": {
+                    "name": "bottomDescription",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -278,6 +390,34 @@ export const schema = {
                 },
                 "image": {
                     "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "customPriceSymbol": {
+                    "name": "customPriceSymbol",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "MenuItemLikes": {
+                    "name": "MenuItemLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "MenuItemLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "menuitemID"
+                    }
+                },
+                "likeCount": {
+                    "name": "likeCount",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -485,6 +625,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "MenuItemLikes": {
+                    "name": "MenuItemLikes",
+                    "isArray": true,
+                    "type": {
+                        "model": "MenuItemLike"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userID"
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -673,5 +827,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "34c4f374673d7ce1e4e8c5886c027735"
+    "version": "fa2601213c9481d54fde94dc89fe5a54"
 };

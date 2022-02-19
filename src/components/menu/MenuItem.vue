@@ -25,7 +25,7 @@
               v-if="menuItemData.price"
               class="font-bold badge badge-sm badge-outline p-2 w-16 mt-2"
             >
-              {{ menuItemData.price }} {{ getCurrency(menuItemData.currency).symbol }}
+              {{ menuItemData.price }} {{ getCurrency(menuItemData).symbol }}
             </div>
           </div>
           <div class="flex flex-1 justify-end">

@@ -17,9 +17,10 @@ const MenuItemRating = {
   "VERY_SATISFIED": "VERY_SATISFIED"
 };
 
-const { Menu, MenuCategory, MenuItem, MenuItemReview, User, Business } = initSchema(schema);
+const { MenuItemLike, Menu, MenuCategory, MenuItem, MenuItemReview, User, Business } = initSchema(schema);
 
 export {
+  MenuItemLike,
   Menu,
   MenuCategory,
   MenuItem,

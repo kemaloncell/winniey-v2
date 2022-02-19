@@ -17,6 +17,10 @@ export enum MenuItemRating {
 
 
 
+type MenuItemLikeMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type MenuMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -41,6 +45,17 @@ type BusinessMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+export declare class MenuItemLike {
+  readonly id: string;
+  readonly menuitemID: string;
+  readonly userID: string;
+  readonly status?: boolean;
+  readonly createdAt?: string;
+  readonly updatedAt?: string;
+  constructor(init: ModelInit<MenuItemLike, MenuItemLikeMetaData>);
+  static copyOf(source: MenuItemLike, mutator: (draft: MutableModel<MenuItemLike, MenuItemLikeMetaData>) => MutableModel<MenuItemLike, MenuItemLikeMetaData> | void): MenuItemLike;
+}
+
 export declare class Menu {
   readonly id: string;
   readonly name?: string;
@@ -50,6 +65,7 @@ export declare class Menu {
   readonly notifications?: (string | null)[];
   readonly isDefault?: boolean;
   readonly description?: string;
+  readonly bottomDescription?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Menu, MenuMetaData>);
@@ -61,6 +77,8 @@ export declare class MenuCategory {
   readonly MenuItems?: (MenuItem | null)[];
   readonly name?: string;
   readonly menuID: string;
+  readonly topDescriptiom?: string;
+  readonly bottomDescription?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuCategory, MenuCategoryMetaData>);
@@ -77,6 +95,9 @@ export declare class MenuItem {
   readonly MenuItemReviews?: (MenuItemReview | null)[];
   readonly currency?: Currency | keyof typeof Currency;
   readonly image?: string;
+  readonly customPriceSymbol?: string;
+  readonly MenuItemLikes?: (MenuItemLike | null)[];
+  readonly likeCount?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuItem, MenuItemMetaData>);
@@ -102,6 +123,7 @@ export declare class User {
   readonly MenuItemReviews?: (MenuItemReview | null)[];
   readonly description?: string;
   readonly owner?: string;
+  readonly MenuItemLikes?: (MenuItemLike | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);

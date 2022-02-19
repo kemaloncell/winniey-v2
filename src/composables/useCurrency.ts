@@ -18,8 +18,12 @@ export const useCurrency = () => {
     },
   }
 
-  const getCurrency = (currency: string) => {
-    return currencies[currency] || {}
+  const getCurrency = (menuItemData) => {
+    return menuItemData.customPriceSymbol
+      ? {
+        value: menuItemData.customPriceSymbol, symbol: menuItemData.customPriceSymbol,
+      }
+      : currencies[menuItemData.currency] || {}
   }
 
   return {
