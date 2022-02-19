@@ -24,6 +24,28 @@ export const useAdminMenu = defineStore({
     getBusinessInfo: state => state.businessInfo,
   },
   actions: {
+    setDraggedMenuCategory(menu) {
+      menu.forEach((item) => {
+        const currentItem = this.menu.find(
+          menuItem => menuItem.category.id === item.category.id,
+        )
+        if (currentItem) {
+          const { category } = currentItem
+          const categoryIndex = menu.findIndex(
+            menuItem => menuItem.category.id === category.id,
+          )
+          if (categoryIndex && category.order !== categoryIndex) {
+            this.updateCategory({
+              category,
+              update: {
+                order: categoryIndex,
+              },
+            })
+          }
+        }
+      })
+      this.menu = menu
+    },
     search(searchText) {
       const query = searchText.trim().toLowerCase()
       if (!query || query.length < 2) {
@@ -102,7 +124,7 @@ export const useAdminMenu = defineStore({
           MenuCategory,
           category => category.menuID('eq', selectedMenu.id),
           {
-            sort: s => s.createdAt(SortDirection.ASCENDING),
+            sort: s => s.order(SortDirection.ASCENDING) && s.createdAt(SortDirection.ASCENDING),
           },
         )
 
@@ -228,16 +250,20 @@ export const useAdminMenu = defineStore({
       const original = await DataStore.query(MenuCategory, payload.category.id)
       const result = await DataStore.save(
         MenuCategory.copyOf(original, (updated) => {
-          updated.name = payload.categoryName
+          Object.entries(payload.update).forEach(([key, value]) => {
+            updated[key] = value
+          })
         }),
       )
 
       if (result) {
         this.$patch((state) => {
-          const category = state.menu.find(
+          const categoryItem = state.menu.find(
             f => f.category.id === payload.category.id,
           )
-          category.category.name = payload.categoryName
+          Object.entries(payload.update).forEach(([key, value]) => {
+            categoryItem.category[key] = value
+          })
         })
       }
 

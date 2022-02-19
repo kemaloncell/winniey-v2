@@ -64,7 +64,9 @@ const updateCategory = async() => {
   isSaveButtonDisabled.value = true
 
   await adminMenu.updateCategory({
-    categoryName: categoryName.value,
+    update: {
+      name: categoryName.value,
+    },
     category: props.selectedCategory.category,
   })
 

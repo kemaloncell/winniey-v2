@@ -4,42 +4,47 @@
       <menu-dropdown v-if="isMenuDropDownVisible" />
       <admin-menu-search />
     </div>
-    <menu-category
-      v-for="categoryData in data"
-      :key="categoryData.id"
-      class="my-4"
-      :category-data="categoryData"
-      :collapse-open="isCollapseOpen"
+    <draggable
+      v-model="data"
+      item-key="id"
     >
-      <template #header>
-        <div class="flex justify-center mb-4">
-          <a
-            class="btn btn-sm btn-primary"
-            @click="onChildAddModal(categoryData)"
-          >Ekle</a>
-        </div>
-      </template>
-      <template #actions>
-        <button class="btn btn-sm" @click="onEditModal(categoryData)">
-          <carbon-edit class="w-8 h-5" />
-        </button>
-        <button
-          v-if="categoryData.items && categoryData.items.length === 0"
-          class="btn btn-sm ml-4 bg-red-500"
-          @click="onDeleteModal(categoryData)"
+      <template #item="{ element }">
+        <menu-category
+          class="my-4"
+          :category-data="element"
+          :collapse-open="isCollapseOpen"
         >
-          <carbon-trash-can class="w-8 h-5" />
-        </button>
+          <template #header>
+            <div class="flex justify-center mb-4">
+              <a
+                class="btn btn-sm btn-primary"
+                @click="onChildAddModal(element)"
+              >Ekle</a>
+            </div>
+          </template>
+          <template #actions>
+            <button class="btn btn-sm" @click="onEditModal(element)">
+              <carbon-edit class="w-8 h-5" />
+            </button>
+            <button
+              v-if="element.items && element.items.length === 0"
+              class="btn btn-sm ml-4 bg-red-500"
+              @click="onDeleteModal(element)"
+            >
+              <carbon-trash-can class="w-8 h-5" />
+            </button>
+          </template>
+          <template #itemActions="{ menuItem }">
+            <a type="button" class="btn btn-sm" @click="onChildEditModal(menuItem)">
+              <carbon-edit class="w-8 h-5" />
+            </a>
+            <a class="btn btn-sm bg-red-500" @click="onChildDeleteModal(menuItem)">
+              <carbon-trash-can class="w-8 h-5" />
+            </a>
+          </template>
+        </menu-category>
       </template>
-      <template #itemActions="{ menuItem }">
-        <a type="button" class="btn btn-sm" @click="onChildEditModal(menuItem)">
-          <carbon-edit class="w-8 h-5" />
-        </a>
-        <a class="btn btn-sm bg-red-500" @click="onChildDeleteModal(menuItem)">
-          <carbon-trash-can class="w-8 h-5" />
-        </a>
-      </template>
-    </menu-category>
+    </draggable>
     <div class="flex justify-center my-4">
       <button
         v-if="isAddCategoryButtonVisible"
@@ -103,7 +108,7 @@
   </div>
 </template>
 <script setup lang="ts">
-
+import draggable from 'vuedraggable'
 // Modals
 import AddCategoryModal from '~/pages/admin/menu/components/AddCategoryModal.vue'
 import EditModal from '~/pages/admin/menu/components/EditModal.vue'
@@ -162,7 +167,15 @@ const onChildDeleteModal = (val) => {
   isChildDeleteModal.value = !isChildDeleteModal.value
   selectedMenuItem.value = val
 }
-const data = computed(() => adminMenu.getMenu)
+const data = computed({
+  get() {
+    return adminMenu.getMenu
+  },
+  set(value) {
+    adminMenu.setDraggedMenuCategory(value)
+  },
+})
+
 const selectedMenu = computed(() => adminMenu.getSelectedMenu)
 
 adminMenu.fetchMenu()
