@@ -6,43 +6,51 @@
     </div>
     <draggable
       v-model="data"
+      handle=".handle"
       item-key="id"
     >
       <template #item="{ element }">
-        <menu-category
-          class="my-4"
-          :category-data="element"
-          :collapse-open="isCollapseOpen"
-        >
-          <template #header>
-            <div class="flex justify-center mb-4">
-              <a
-                class="btn btn-sm btn-primary"
-                @click="onChildAddModal(element)"
-              >Ekle</a>
-            </div>
-          </template>
-          <template #actions>
-            <button class="btn btn-sm" @click="onEditModal(element)">
-              <carbon-edit class="w-8 h-5" />
-            </button>
-            <button
-              v-if="element.items && element.items.length === 0"
-              class="btn btn-sm ml-4 bg-red-500"
-              @click="onDeleteModal(element)"
-            >
-              <carbon-trash-can class="w-8 h-5" />
-            </button>
-          </template>
-          <template #itemActions="{ menuItem }">
-            <a type="button" class="btn btn-sm" @click="onChildEditModal(menuItem)">
-              <carbon-edit class="w-8 h-5" />
-            </a>
-            <a class="btn btn-sm bg-red-500" @click="onChildDeleteModal(menuItem)">
-              <carbon-trash-can class="w-8 h-5" />
-            </a>
-          </template>
-        </menu-category>
+        <div class="flex my-4 gap-1 items-center">
+          <button
+            class="handle btn btn-ghost  h-full py-1 bordered flex items-center justify-center p-2 text-2xl font-bold cursor-pointer"
+          >
+            <carbon-menu />
+          </button>
+          <menu-category
+            class="flex-1"
+            :category-data="element"
+            :collapse-open="isCollapseOpen"
+          >
+            <template #header>
+              <div class="flex justify-center mb-4">
+                <a
+                  class="btn btn-sm btn-primary"
+                  @click="onChildAddModal(element)"
+                >Ekle</a>
+              </div>
+            </template>
+            <template #actions>
+              <button class="btn btn-sm" @click="onEditModal(element)">
+                <carbon-edit class="w-8 h-5" />
+              </button>
+              <button
+                v-if="element.items && element.items.length === 0"
+                class="btn btn-sm ml-4 bg-red-500"
+                @click="onDeleteModal(element)"
+              >
+                <carbon-trash-can class="w-8 h-5" />
+              </button>
+            </template>
+            <template #itemActions="{ menuItem }">
+              <a type="button" class="btn btn-sm" @click="onChildEditModal(menuItem)">
+                <carbon-edit class="w-8 h-5" />
+              </a>
+              <a class="btn btn-sm bg-red-500" @click="onChildDeleteModal(menuItem)">
+                <carbon-trash-can class="w-8 h-5" />
+              </a>
+            </template>
+          </menu-category>
+        </div>
       </template>
     </draggable>
     <div class="flex justify-center my-4">
