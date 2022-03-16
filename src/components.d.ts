@@ -10,6 +10,7 @@ declare module 'vue' {
     AuthConfirmation: typeof import('./components/AuthConfirmation.vue')['default']
     BusinessCard: typeof import('./components/menu/BusinessCard.vue')['default']
     CarbonAdd: typeof import('~icons/carbon/add')['default']
+    CarbonCloudUpload: typeof import('~icons/carbon/cloud-upload')['default']
     CarbonDraggable: typeof import('~icons/carbon/draggable')['default']
     CarbonEdit: typeof import('~icons/carbon/edit')['default']
     CarbonMenu: typeof import('~icons/carbon/menu')['default']

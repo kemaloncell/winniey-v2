@@ -94,6 +94,25 @@ export const useAdminMenu = defineStore({
         },
       })
     },
+    async setBusinessLogo(payload) {
+      const result = await Storage.put(
+        'logo.jpg',
+        payload.file,
+        {
+          level: 'public',
+          contentType: 'image/jpeg',
+        },
+      )
+
+      const { key } = result
+      const authStore = useAuthStore()
+      await authStore.updateBusiness({
+        businessInfo: authStore.currentBusiness,
+        update: {
+          logo: key,
+        },
+      })
+    },
     async fetchMenu() {
       const menu = []
 

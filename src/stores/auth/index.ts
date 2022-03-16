@@ -90,7 +90,6 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function updateBusiness(payload) {
-    console.log('updateBusiness', payload)
     const original = await DataStore.query(Business, payload.businessInfo.id)
     const result = await DataStore.save(
       Business.copyOf(original, (updated) => {
