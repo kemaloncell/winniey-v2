@@ -25,7 +25,9 @@ const businessLogo = computed(() => {
 watchEffect(() => {
   if (isLiked.value)
     isLikeBusiness.value = isLiked.value
-  likeCount.value = businessInfo.value.likeCount
+  likeCount.value = businessInfo.value.likeCount || 0
+  if (likeCount.value === 0)
+    isLikeBusiness.value = false
 })
 
 const onLike = () => {
