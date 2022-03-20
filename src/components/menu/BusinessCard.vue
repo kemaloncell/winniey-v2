@@ -12,7 +12,7 @@ const businessInfo = computed(() => userMenu.getBusinessInfo)
 const isLiked = computed(() => userMenu.getIsBusinessLiked)
 const selectedMenu = computed(() => userMenu.getSelectedMenu || {})
 const isLikeBusiness = ref(false)
-const likeCount = ref(false)
+const likeCount = ref(0)
 
 const businessLogo = computed(() => {
   const { logo } = businessInfo.value

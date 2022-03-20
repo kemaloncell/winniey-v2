@@ -37,7 +37,10 @@ const isMenuDropDownVisible = computed(() => {
 menu.fetchMenu({ businessUsername })
 
 const onLikeBusiness = async(data) => {
-  const userId = auth.currentUser.getUsername()
+  const userId = auth.currentUserUsername
+  if (!userId)
+    return
+
   const payload = {
     userId,
     businessId: businessInfo.value.id,
