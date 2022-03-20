@@ -107,7 +107,7 @@ export const useUserMenu = defineStore({
       )
 
       this.businessInfo = currentBusiness[0]
-      const businessID = currentBusiness[0].id
+      const businessID = currentBusiness[0]?.id
 
       // const menu = useMenu()
       // await menu.fetchMenu(businessID)
@@ -115,8 +115,8 @@ export const useUserMenu = defineStore({
         NProgress.done()
         return
       }
-      const userAuth = useAuthStore()
-      const userId = userAuth.currentUser?.getUsername()
+      const auth = useAuthStore()
+      const userId = auth.currentUserUsername
 
       if (userId) {
         const businessLiked = await DataStore.query(BusinessLike, business =>
