@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BusinessCard v-if="businessInfo" />
+    <BusinessCard v-if="businessInfo" @like="onLikeBusiness" />
     <div class="flex flex-row mt-4 justify-between">
       <menu-search class="md:flex-1 md:mr-4" />
       <user-menu-dropdown />
@@ -15,14 +15,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Hub } from '@aws-amplify/core'
-import { DataStore } from '@aws-amplify/datastore'
-import NProgress from 'nprogress'
 import { useUserMenu } from '~/stores/user'
+import { useAuthStore } from '~/stores/auth'
 
 const route = useRoute()
 const { businessUsername } = route.params
 const menu = useUserMenu()
+const auth = useAuthStore()
 
 const userMenu = computed(() => menu.getMenu)
 const businessInfo = computed(() => menu.getBusinessInfo)
@@ -36,4 +35,15 @@ const isMenuDropDownVisible = computed(() => {
 })
 
 menu.fetchMenu({ businessUsername })
+
+const onLikeBusiness = async(data) => {
+  const userId = auth.currentUser.getUsername()
+  const payload = {
+    userId,
+    businessId: businessInfo.value.id,
+    ...data,
+  }
+
+  await menu.likeBusiness(payload)
+}
 </script>

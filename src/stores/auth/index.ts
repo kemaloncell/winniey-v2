@@ -12,6 +12,9 @@ export const useAuthStore = defineStore('auth', () => {
   const currentUser = computed(() => {
     return user.value
   })
+  const currentUserUsername = computed(() => {
+    return user?.value?.username
+  })
   const currentBusiness = computed(() => {
     return business.value
   })
@@ -108,6 +111,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     setCurrentUser,
+    currentUserUsername,
     updateBusiness,
     signUp,
     confirmEmail,

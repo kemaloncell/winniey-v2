@@ -34,7 +34,7 @@ export const useAdminMenu = defineStore({
           const categoryIndex = menu.findIndex(
             menuItem => menuItem.category.id === category.id,
           )
-          if (categoryIndex && category.order !== categoryIndex) {
+          if (categoryIndex !== -1 && category.order !== categoryIndex) {
             this.updateCategory({
               category,
               update: {

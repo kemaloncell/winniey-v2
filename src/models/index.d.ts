@@ -38,7 +38,7 @@ type MenuItemMetaData = {
 }
 
 type MenuItemReviewMetaData = {
-  readOnlyFields: 'updatedAt';
+  readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
 type UserMetaData = {
@@ -81,6 +81,7 @@ export declare class Menu {
   readonly isDefault?: boolean;
   readonly description?: string;
   readonly bottomDescription?: string;
+  readonly owner?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Menu, MenuMetaData>);
@@ -95,6 +96,7 @@ export declare class MenuCategory {
   readonly topDescriptiom?: string;
   readonly bottomDescription?: string;
   readonly order?: number;
+  readonly owner?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuCategory, MenuCategoryMetaData>);
@@ -108,7 +110,7 @@ export declare class MenuItem {
   readonly description?: string;
   readonly price?: number;
   readonly rating?: number;
-  readonly MenuItemReviews?: (MenuItemReview | null)[];
+  readonly MenuItemReviews?: (MenuItemLike | null)[];
   readonly currency?: Currency | keyof typeof Currency;
   readonly image?: string;
   readonly customPriceSymbol?: string;
@@ -123,11 +125,11 @@ export declare class MenuItem {
 
 export declare class MenuItemReview {
   readonly id: string;
-  readonly userID: string;
-  readonly content?: string;
-  readonly rating?: MenuItemRating | keyof typeof MenuItemRating;
-  readonly createdAt?: string;
   readonly menuitemID?: string;
+  readonly userID: string;
+  readonly rating?: MenuItemRating | keyof typeof MenuItemRating;
+  readonly content?: string;
+  readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<MenuItemReview, MenuItemReviewMetaData>);
   static copyOf(source: MenuItemReview, mutator: (draft: MutableModel<MenuItemReview, MenuItemReviewMetaData>) => MutableModel<MenuItemReview, MenuItemReviewMetaData> | void): MenuItemReview;
@@ -137,10 +139,10 @@ export declare class User {
   readonly id: string;
   readonly fullName?: string;
   readonly profilePicture?: string;
-  readonly MenuItemReviews?: (MenuItemReview | null)[];
+  readonly MenuItemReviews?: (BusinessLike | null)[];
   readonly description?: string;
   readonly owner?: string;
-  readonly MenuItemLikes?: (MenuItemLike | null)[];
+  readonly MenuItemLikes?: (BusinessLike | null)[];
   readonly BusinessLikes?: (BusinessLike | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
@@ -159,7 +161,7 @@ export declare class Business {
   readonly owner?: string;
   readonly wifi?: string;
   readonly logo?: string;
-  readonly BusinessLikes?: (BusinessLike | null)[];
+  readonly BusinessLikes?: (Menu | null)[];
   readonly likeCount?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;

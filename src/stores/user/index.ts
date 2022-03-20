@@ -1,8 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { DataStore, SortDirection } from '@aws-amplify/datastore'
 import NProgress from 'nprogress'
-import { Business, Menu, MenuCategory, MenuItem } from '~/models'
-
+import { Business, BusinessLike, Menu, MenuCategory, MenuItem } from '~/models'
+import { useAuthStore } from '~/stores/auth/'
 export const useUserMenu = defineStore({
   id: 'userMenu',
 
@@ -12,6 +12,7 @@ export const useUserMenu = defineStore({
     filteredMenu: [],
     selectedMenu: null,
     businessInfo: null,
+    isBusinessLiked: false,
   }),
   getters: {
     getMenu: state =>
@@ -20,8 +21,47 @@ export const useUserMenu = defineStore({
     getMenus: state => state.menus,
     getSelectedMenu: state => state.selectedMenu,
     getBusinessInfo: state => state.businessInfo,
+    getIsBusinessLiked: state => state.isBusinessLiked,
   },
   actions: {
+    async likeBusiness(payload) {
+      const { userId, businessId, status, likeCount } = payload
+
+      const currentBusinessLike = await DataStore.query(BusinessLike, business =>
+        business.userID('eq', userId).businessID('eq', businessId),
+      )
+
+      const currentStatus = (currentBusinessLike.length && currentBusinessLike[0]?.status) ? !currentBusinessLike[0].status : true
+      if (currentStatus !== status)
+        return
+
+      if (!currentBusinessLike.length) {
+        await DataStore.save(
+          new BusinessLike({
+            businessID: businessId,
+            userID: userId,
+            status: currentStatus,
+          }),
+        )
+      }
+      else {
+        const original = await DataStore.query(BusinessLike, currentBusinessLike[0].id)
+        await DataStore.save(
+          BusinessLike.copyOf(original, (updated) => {
+            updated.status = currentStatus
+          }),
+        )
+      }
+
+      const original = await DataStore.query(Business, businessId)
+      const newLikeCount = currentStatus ? original.likeCount + 1 : original.likeCount - 1
+      if (newLikeCount !== likeCount) return
+      const businessResult = await DataStore.save(
+        Business.copyOf(original, (updated) => {
+          updated.likeCount = newLikeCount
+        }),
+      )
+    },
     search(searchText) {
       const query = searchText.trim().toLowerCase()
       if (!query || query.length < 2) {
@@ -74,6 +114,15 @@ export const useUserMenu = defineStore({
       if (!businessID) {
         NProgress.done()
         return
+      }
+      const userAuth = useAuthStore()
+      const userId = userAuth.currentUser?.getUsername()
+
+      if (userId) {
+        const businessLiked = await DataStore.query(BusinessLike, business =>
+          business.userID('eq', userId).businessID('eq', businessID),
+        )
+        this.isBusinessLiked = !!((businessLiked.length && businessLiked[0]?.status))
       }
 
       const menus = await DataStore.query(Menu, menuItem =>

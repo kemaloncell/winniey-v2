@@ -3,6 +3,7 @@ import { ViteSSG } from 'vite-ssg'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { Amplify } from '@aws-amplify/core'
+import { AuthModeStrategyType } from "@aws-amplify/datastore";
 import App from './App.vue'
 import awsConfig from './aws-exports'
 
@@ -17,8 +18,12 @@ import 'virtual:windi-utilities.css'
 import 'virtual:windi-devtools'
 
 const routes = setupLayouts(generatedRoutes)
-Amplify.configure(awsConfig)
-
+Amplify.configure({
+  ...awsConfig,
+  DataStore: {
+    authModeStrategyType: AuthModeStrategyType.MULTI_AUTH,
+  },
+})
 export const createApp = ViteSSG(
   App,
   { routes, base: import.meta.env.BASE_URL },

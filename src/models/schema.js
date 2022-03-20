@@ -80,6 +80,21 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -171,6 +186,21 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -252,6 +282,13 @@ export const schema = {
                 },
                 "bottomDescription": {
                     "name": "bottomDescription",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "owner": {
+                    "name": "owner",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -367,6 +404,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -467,7 +511,7 @@ export const schema = {
                     "name": "MenuItemReviews",
                     "isArray": true,
                     "type": {
-                        "model": "MenuItemReview"
+                        "model": "MenuItemLike"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -589,18 +633,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "menuitemID": {
+                    "name": "menuitemID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "userID": {
                     "name": "userID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "content": {
-                    "name": "content",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
                     "attributes": []
                 },
                 "rating": {
@@ -612,19 +656,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "content": {
+                    "name": "content",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
                     "type": "AWSDateTime",
                     "isRequired": false,
-                    "attributes": []
-                },
-                "menuitemID": {
-                    "name": "menuitemID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isReadOnly": true
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -645,18 +690,18 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUser",
+                        "name": "byMenuItem",
                         "fields": [
-                            "userID"
+                            "menuitemID"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byMenuItem",
+                        "name": "byUser",
                         "fields": [
-                            "menuitemID"
+                            "userID"
                         ]
                     }
                 },
@@ -706,7 +751,7 @@ export const schema = {
                     "name": "MenuItemReviews",
                     "isArray": true,
                     "type": {
-                        "model": "MenuItemReview"
+                        "model": "BusinessLike"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -734,7 +779,7 @@ export const schema = {
                     "name": "MenuItemLikes",
                     "isArray": true,
                     "type": {
-                        "model": "MenuItemLike"
+                        "model": "BusinessLike"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -788,6 +833,21 @@ export const schema = {
                         "rules": [
                             {
                                 "allow": "public",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
                                 "operations": [
                                     "create",
                                     "update",
@@ -885,7 +945,7 @@ export const schema = {
                     "name": "BusinessLikes",
                     "isArray": true,
                     "type": {
-                        "model": "BusinessLike"
+                        "model": "Menu"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -933,6 +993,15 @@ export const schema = {
                             {
                                 "allow": "public",
                                 "operations": [
+                                    "read"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
                                     "create",
                                     "update",
                                     "delete",
@@ -967,5 +1036,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "6dd285f471153744b0551b2cd8ec5132"
+    "version": "73a7c1127e6269ab6dd775a1969ae080"
 };
