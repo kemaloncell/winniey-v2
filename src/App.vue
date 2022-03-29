@@ -1,6 +1,9 @@
 <script setup lang="ts">
 if (window?.location) {
   const host = window.location.host
+  if (host.includes('netlify'))
+    return
+
   const parts = host.split('.')
   const domainLength = 3
   if (parts.length === domainLength) {
