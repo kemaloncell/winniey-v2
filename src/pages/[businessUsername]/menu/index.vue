@@ -1,14 +1,18 @@
 <template>
   <div>
     <BusinessCard v-if="businessInfo" @like="onLikeBusiness" />
-    <div class="flex flex-row mt-4 justify-between">
-      <menu-search class="md:flex-1 md:mr-4" />
-      <user-menu-dropdown />
+    <MenuChips class="my-2" />
+    <div class="sticky top-0 z-10 bg-base-100">
+      <div class="flex flex-row justify-between">
+        <menu-search class="md:flex-1 md:mr-4" />
+        <user-menu-dropdown />
+      </div>
+      <MenuTabs class="my-4" :tabs="userMenu" @tab="onChangeTab" />
     </div>
     <menu-category
       v-for="categoryData in userMenu"
       :key="categoryData.id"
-      class="my-4"
+      class="my-2"
       :category-data="categoryData"
       :collapse-open="isCollapseOpen"
     />
@@ -26,8 +30,10 @@ const auth = useAuthStore()
 const userMenu = computed(() => menu.getMenu)
 const businessInfo = computed(() => menu.getBusinessInfo)
 
+const isCollapse = ref(false)
+
 const isCollapseOpen = computed(() => {
-  return menu.getFilteredMenu.length > 0
+  return menu.getFilteredMenu.length > 0 || isCollapse.value
 })
 
 const isMenuDropDownVisible = computed(() => {
@@ -48,5 +54,23 @@ const onLikeBusiness = async(data) => {
   }
 
   await menu.likeBusiness(payload)
+}
+</script>
+
+<script lang="ts">
+export default {
+  methods: {
+    onChangeTab(tab) {
+      const selector = `#category-${tab.id}`
+      const el = this.$el.querySelector(selector)
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'start',
+        })
+      }
+    },
+  },
 }
 </script>

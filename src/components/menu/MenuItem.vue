@@ -21,11 +21,14 @@
             >
               {{ menuItemData.description }}
             </p>
-            <div
-              v-if="menuItemData.price"
-              class="font-bold badge badge-sm badge-outline p-2 w-16 mt-2"
-            >
-              {{ menuItemData.price }} {{ getCurrency(menuItemData).symbol }}
+            <div class="flex items-center gap-3 mt-2">
+              <span class="bg-primary rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20"><carbon-add class="w-8 h-5"></carbon-add></span>
+              <div
+                v-if="menuItemData.price"
+                class="font-bold badge badge-sm  p-2 w-16"
+              >
+                {{ menuItemData.price }} {{ getCurrency(menuItemData).symbol }}
+              </div>
             </div>
           </div>
           <div class="flex flex-1 justify-end">

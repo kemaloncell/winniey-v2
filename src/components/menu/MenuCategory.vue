@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="`category-${categoryData.category.id}`">
     <div
       tabindex="0"
       class="collapse border rounded-box border-base-300 collapse-arrow"
