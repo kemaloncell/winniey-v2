@@ -21,11 +21,21 @@
             >
               {{ menuItemData.description }}
             </p>
-            <div
-              v-if="menuItemData.price"
-              class="font-bold badge badge-sm badge-outline p-2 w-16 mt-2"
-            >
-              {{ menuItemData.price }} {{ getCurrency(menuItemData).symbol }}
+            <div class="flex items-center gap-3 mt-2">
+              <slot name="basket">
+                <div class="inline-block bg-primary rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20" @click="addToBasket">
+                  <carbon-add class="w-8 h-5" />
+                </div>
+              </slot>
+              <div
+                v-if="menuItemData.price "
+                class="font-bold badge badge-sm  p-2 w-16"
+              >
+                <slot name="price">
+                  {{ menuItemData.price }}
+                </slot>
+                {{ getCurrency(menuItemData).symbol }}
+              </div>
             </div>
           </div>
           <div class="flex flex-1 justify-end">
@@ -40,7 +50,7 @@
 </template>
 <script setup>
 import { useCurrency } from '~/composables'
-
+import { useBasketStore } from '~/stores/basket'
 const props = defineProps({
   menuItemData: {
     type: Object,
@@ -49,12 +59,16 @@ const props = defineProps({
 })
 
 const { getCurrency } = useCurrency()
-
+const basket = useBasketStore()
 const menuItemImage = computed(() => {
   const { image } = props.menuItemData
   if (!image)
     return false
   return `https://winniey-storage-d2iie9fdmnebxs125556-staging.s3.amazonaws.com/public/${image}`
 })
+
+const addToBasket = () => {
+  basket.addToBasket(props.menuItemData)
+}
 
 </script>

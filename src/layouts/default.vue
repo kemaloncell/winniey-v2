@@ -7,7 +7,10 @@
 
     <div v-else class="flex justify-center">
       <div class="flex-1 max-w-7xl mx-2 md:mx-0">
-        <router-view />
+        <div class="pb-16">
+          <router-view />
+        </div>
+        <bottom-navigation />
       </div>
     </div>
   </div>
