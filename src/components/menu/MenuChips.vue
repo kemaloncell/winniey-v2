@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-scroll flex gap-2">
+  <div class="custom-chips">
     <Chip class="bg-red-500/90">
       <carbon-star />
       <span>
@@ -20,3 +20,14 @@
     </Chip>
   </div>
 </template>
+<style>
+.custom-chips {
+  max-width: 100vw;
+  overflow: scroll;
+  display: flex;
+  gap: 0.5rem;
+}
+.custom-chips::-webkit-scrollbar {
+  display: none;
+}
+</style>

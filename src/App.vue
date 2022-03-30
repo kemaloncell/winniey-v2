@@ -1,13 +1,15 @@
 <script setup lang="ts">
 if (window?.location) {
   const host = window.location.host
-  const parts = host.split('.')
-  const domainLength = 3
-  if (parts.length === domainLength) {
-    const username = parts[0]
-    const router = useRouter()
+  if (!host.includes('netlify')) {
+    const parts = host.split('.')
+    const domainLength = 3
+    if (parts.length === domainLength) {
+      const username = parts[0]
+      const router = useRouter()
 
-    router.push(`/${username}/menu`)
+      router.push(`/${username}/menu`)
+    }
   }
 }
 useHead({
