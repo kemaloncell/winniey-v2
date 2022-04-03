@@ -1,7 +1,11 @@
 <template>
-  <Order />
+  <OrderTable />
 </template>
 <script setup>
-import Order from './components/Order.vue'
+import OrderTable from './components/OrderTable.vue'
 
 </script>
+<route lang="yaml">
+meta:
+  layout: admin
+</route>

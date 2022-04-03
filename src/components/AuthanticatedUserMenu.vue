@@ -7,6 +7,8 @@ const router = useRouter()
 
 const showMenu = ref(false)
 const showBusinessSettings = ref(false)
+const showVisualSettings = ref(false)
+const show = ref(false)
 const onClickUserButton = () => {
   showMenu.value = !showMenu.value
 }
@@ -15,11 +17,19 @@ const onClickBusinessSettings = () => {
   showBusinessSettings.value = !showBusinessSettings.value
 }
 
+const onClickVisualSettings = () => {
+  showVisualSettings.value = !showVisualSettings.value
+}
+
+
 const onLogout = () => {
   auth.logout()
 }
 
 const onShowBusinessClose = () => {
+  showBusinessSettings.value = false
+}
+const onShowVisualClose = () => {
   showBusinessSettings.value = false
 }
 
@@ -48,7 +58,10 @@ const onClickLogin = () => {
           </a>
         </li>
         <li @click="onClickBusinessSettings">
-          <a> Ayarlar </a>
+          <a>Ayarlar</a>
+        </li>
+        <li @click="onClickVisualSettings">
+          <a>Görünüm</a>
         </li>
         <li @click="onLogout">
           <a> Çıkış Yap </a>
@@ -59,5 +72,6 @@ const onClickLogin = () => {
       <a class="btn btn-ghost btn-sm rounded-btn"> Giriş Yap </a>
     </div>
     <business-settings :business-info="auth.currentBusiness" :show="showBusinessSettings" @close="onShowBusinessClose" />
+    <visual-settings :business-info="auth.currentBusiness" :show="showVisualSettings" @close="onShowVisualClose" />
   </div>
 </template>

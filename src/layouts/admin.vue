@@ -2,7 +2,7 @@
   <div>
     <AdminHeader />
     <div class="flex justify-center">
-      <div class="flex-1 max-w-7xl">
+      <div class="w-full max-w-7xl">
         <router-view />
       </div>
     </div>
