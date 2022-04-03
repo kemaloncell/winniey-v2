@@ -3,7 +3,7 @@ import { DataStore, SortDirection } from '@aws-amplify/datastore'
 import NProgress from 'nprogress'
 import { Business, BusinessLike, Menu, MenuCategory, MenuItem } from '~/models'
 import { useAuthStore } from '~/stores/auth/'
-//import {menuService} from '~/services/menu'
+
 export const useUserMenu = defineStore({
   id: 'userMenu',
 

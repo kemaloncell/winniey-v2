@@ -21,7 +21,6 @@ declare module 'vue' {
     CarbonStar: typeof import('~icons/carbon/star')['default']
     CarbonStudyNext: typeof import('~icons/carbon/study-next')['default']
     CarbonTag: typeof import('~icons/carbon/tag')['default']
-    CarbonTrashCan: typeof import('~icons/carbon/trash-can')['default']
     CarbonWifi: typeof import('~icons/carbon/wifi')['default']
     Chip: typeof import('./components/Chip.vue')['default']
     ConfirmModal: typeof import('./components/shared/ConfirmModal.vue')['default']

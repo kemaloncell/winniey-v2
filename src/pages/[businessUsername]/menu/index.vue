@@ -20,11 +20,13 @@
 </template>
 <script setup lang="ts">
 import { useUserMenu } from '~/stores/user'
+import { useUserMenu2 } from '~/stores/user/menu'
 import { useAuthStore } from '~/stores/auth'
 
 const route = useRoute()
 const { businessUsername } = route.params
 const menu = useUserMenu()
+const menu2 = useUserMenu2()
 const auth = useAuthStore()
 
 const userMenu = computed(() => menu.getMenu)
@@ -41,6 +43,7 @@ const isMenuDropDownVisible = computed(() => {
 })
 
 menu.fetchMenu({ businessUsername })
+menu2.fetchAllInfo({ businessUsername })
 
 const onLikeBusiness = async(data) => {
   const userId = auth.currentUserUsername
