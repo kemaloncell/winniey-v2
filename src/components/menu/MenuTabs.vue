@@ -15,20 +15,17 @@ const emit = defineEmits()
 const props = defineProps({
   tabs: {
     type: Array,
-    default: () => [
-    ],
   },
 })
-
 const tabs = computed(() => {
+  if (!props.tabs.length) return []
   return props.tabs.map((tab, index) => {
     return {
-      id: tab.category.id,
-      title: tab.category.name,
+      id: tab.id,
+      title: tab.name,
     }
   })
 })
-
 const onClickTab = (tab) => {
   emit('tab', tab)
 }

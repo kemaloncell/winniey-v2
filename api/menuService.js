@@ -2,13 +2,16 @@ import { BaseService } from './baseService'
 
 class MenuService extends BaseService {
   constructor() {
-    const baseAPIUrl = process.env.VUE_APP_BASE_API
+    const baseAPIUrl = process.env.VUE_APP_BASE_API || "https://winniey-backend.herokuapp.com/api"
     super(`${baseAPIUrl}/menu`)
   }
 
+  async getMenuList(businessId) {
+    return super.get(`/business-menu-list/${businessId}`)
+  }
+
   async getAll(businessId) {
-    const result = super.get(`/business-menu-list/${businessId}`)
-    return result
+    return super.get(`/all/${businessId}`)
   }
 
   async getById(menuId) {

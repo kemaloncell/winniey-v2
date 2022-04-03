@@ -1,5 +1,5 @@
 <template>
-  <div :id="`category-${categoryData.category.id}`">
+  <div :id="`category-${categoryData.id}`">
     <div
       tabindex="0"
       class="collapse border rounded-box border-base-300 collapse-arrow"
@@ -13,14 +13,14 @@
         @click="onClickTitle"
       >
         <div class="xs:w-16 sm:w-16 md:w-16 lg:w-64">
-          {{ props.categoryData.category.name }}
+          {{ props.categoryData.name }}
         </div>
       </div>
 
       <div class="collapse-content">
         <slot name="header" />
         <menu-item
-          v-for="menuItem in props.categoryData.items"
+          v-for="menuItem in props.categoryData.Items"
           :key="menuItem.id"
           :menu-item-data="menuItem"
         >

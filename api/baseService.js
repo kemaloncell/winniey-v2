@@ -3,13 +3,13 @@ import axios from 'axios'
 class BaseService {
   constructor(baseURL) {
     this.http = axios.create({
-      baseURL
+      baseURL,
     })
   }
 
   async get(url, params) {
     return this.http.get(url, {
-      params
+      params,
     })
   }
 
@@ -35,16 +35,15 @@ class BaseService {
 
   async download(url) {
     return this.http.get(url, {
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
     })
   }
 
   async downloadPost(url, data = {}) {
     return this.http.post(url, data, {
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
     })
   }
-
 }
 
 export { BaseService }
