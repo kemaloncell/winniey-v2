@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="getBasket.length" class="bg-base-200 rounded-box p-4 ">
     <menu-item
       v-for="basketItem in getBasket"
       :key="basketItem.id"
@@ -7,13 +7,12 @@
     >
       <template #basket>
         <div
-          v-if="basketItem.quantity"
           class="inline-block bg-red-500/90 rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20"
           @click="removeToBasket(basketItem)"
         >
           <carbon-trash-can class="w-8 h-5" />
         </div>
-        <span v-if="basketItem.quantity>0">{{ basketItem.quantity }}</span>
+        <span>{{ basketItem.quantity }}</span>
 
         <div
           class="inline-block bg-primary rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20" @click="addToBasket(basketItem)"
@@ -25,10 +24,15 @@
         {{ basketItem.totalPrice }}
       </template>
     </menu-item>
+    <BasketAmount  />
+  </div>
+  <div v-else class="bg-base-200 rounded-box p-4 ">
+    <span class="flex justify-center text-lg">sepetinizde ürün bulunmamaktadır.</span>
   </div>
 </template>
 
 <script setup>
+import BasketAmount from './BasketAmount.vue'
 import { useBasketStore } from '~/stores/basket'
 
 const basket = useBasketStore()

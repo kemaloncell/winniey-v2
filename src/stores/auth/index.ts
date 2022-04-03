@@ -4,6 +4,7 @@ import type { CognitoUser } from '@aws-amplify/auth'
 import { Auth } from '@aws-amplify/auth'
 import { DataStore } from '@aws-amplify/datastore'
 import { Business } from '~/models'
+import Cookies from 'js-cookie'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref < CognitoUser > ({})
@@ -21,6 +22,9 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => {
     return user.value?.username
   })
+  const getIdToken = computed(() => {
+    return user.value?.signInUserSession?.idToken?.jwtToken
+  })
 
   const isBusiness = computed(() => {
     return user.value?.signInUserSession?.idToken?.payload[
@@ -37,6 +41,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function setCurrentUser() {
     try {
       user.value = await Auth.currentAuthenticatedUser()
+      Cookies.set('id_token', getIdToken.value)
       if (user.value)
         await setCurrentBusiness()
     }
@@ -86,6 +91,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     try {
       await Auth.signOut()
+      Cookies.remove('id_token')
       user.value = {}
     }
     catch (err) {

@@ -1,10 +1,7 @@
 <template>
-  <basket />
+  <Basket />
 </template>
-<script>
-import Basket from './components/basket.vue'
-export default {
-  components: { Basket },
-}
-</script>
+<script setup>
+import Basket from './components/Basket.vue'
 
+</script>

@@ -13,6 +13,9 @@
         <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/barcode">
           Barcode
         </router-link>
+        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/order">
+          Order
+        </router-link>
       </div>
     </div>
     <div class="navbar-end">
