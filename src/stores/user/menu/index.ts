@@ -30,6 +30,13 @@ export const useUserMenu2 = defineStore({
       this.menu = menu.Categories
       this.menus = menus
       this.businessInfo = business
+
+      const { themeSettings } = business
+      if (themeSettings && themeSettings.default && !localStorage.getItem('theme')) {
+        localStorage.setItem('theme', themeSettings.default)
+        document.getElementsByTagName('html')[0].setAttribute('data-theme', themeSettings.default)
+      }
+
       NProgress.done()
       return this.menu
     },

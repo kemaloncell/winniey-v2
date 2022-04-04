@@ -7,7 +7,7 @@
     >
       <template #basket>
         <div
-          class="inline-block bg-red-500/90 rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20"
+          class="inline-block bg-error text-primary-content rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20"
           @click="removeToBasket(basketItem)"
         >
           <carbon-trash-can class="w-8 h-5" />
@@ -15,7 +15,7 @@
         <span>{{ basketItem.quantity }}</span>
 
         <div
-          class="inline-block bg-primary rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20" @click="addToBasket(basketItem)"
+          class="inline-block bg-success text-primary-content rounded-lg flex items-center hover:bg-base-200 hover:cursor-pointer transition delay-20" @click="addToBasket(basketItem)"
         >
           <carbon-add class="w-8 h-5" />
         </div>
