@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BusinessCard v-if="businessInfo"/>
+    <BusinessCard v-if="businessInfo" />
     <MenuChips class="my-2" />
     <div class="sticky top-0 z-10 bg-base-100">
       <div class="flex flex-row justify-between">
@@ -22,6 +22,8 @@
 import { useUserMenu } from '~/stores/user'
 import { useUserMenu2 } from '~/stores/user/menu'
 import { useAuthStore } from '~/stores/auth'
+import MenuChips from './components//MenuChips.vue'
+
 
 const route = useRoute()
 const { businessUsername } = route.params

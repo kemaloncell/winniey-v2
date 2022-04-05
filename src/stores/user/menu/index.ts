@@ -5,7 +5,7 @@ import { menuService } from '~/../api/menuService'
 export const useUserMenu2 = defineStore({
   id: 'userMenu2',
   state: () => ({
-    menu: {},
+    menu: [],
     menus: [],
     filteredMenu: [],
     selectedMenu: null,

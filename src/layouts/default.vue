@@ -24,7 +24,7 @@ const ready = ref(true)
 
 const { options } = router
 
-/* DataStore.start()
+DataStore.start()
 const listener = Hub.listen('datastore', async(hubData) => {
   const { event, data } = hubData.payload
   if (event === 'modelSynced') {
@@ -41,8 +41,6 @@ const setReady = () => {
 }
 if (options?.history?.state?.forward)
   setReady()
-
- */
 
 </script>
 <style scoped>

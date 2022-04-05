@@ -32,7 +32,7 @@ declare module 'vue' {
     GlobalModal: typeof import('./components/shared/GlobalModal.vue')['default']
     Header: typeof import('./components/Header.vue')['default']
     MenuCategory: typeof import('./components/menu/MenuCategory.vue')['default']
-    MenuChips: typeof import('./components/menu/MenuChips.vue')['default']
+    MenuChips: typeof import('./pages/[businessUsername]/menu/components/MenuChips.vue')['default']
     MenuItem: typeof import('./components/menu/MenuItem.vue')['default']
     MenuSearch: typeof import('./components/menu/MenuSearch.vue')['default']
     MenuTabs: typeof import('./components/menu/MenuTabs.vue')['default']
