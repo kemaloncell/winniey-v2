@@ -1,9 +1,8 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import NProgress from 'nprogress'
 import { menuService } from '~/../api/menuService'
-
-export const useAdminMenu = defineStore({
-  id: 'adminMenu',
+export const useAdminMenu2 = defineStore({
+  id: 'adminMenu2',
 
   state: () => ({
     menu: {},
@@ -110,63 +109,23 @@ export const useAdminMenu = defineStore({
         },
       })
     },
-    async fetchMenu() {
-      const menu = []
 
-      const authStore = useAuthStore()
-
-      if (!authStore.currentBusiness?.id)
-        await authStore.setCurrentUser()
-
-      const businessID = authStore.currentBusiness?.id
-
-      if (!businessID)
-        return
-
+    async fetchAllInfo() {
       NProgress.start()
-      const menus = await DataStore.query(Menu, menuItem =>
-        menuItem.businessID('eq', businessID),
-      )
+      const id = 3
+      const allInfo = await menuService.getAll(id)
+      console.log(allInfo)
 
-      this.menus = JSON.parse(JSON.stringify(menus))
-
-      if (!this.selectedMenu)
-        this.setSelectedMenu(menus[0]?.id)
-
-      const selectedMenu = this.selectedMenu || menus[0] || null
-
-      if (selectedMenu) {
-        const menuCategories = await DataStore.query(
-          MenuCategory,
-          category => category.menuID('eq', selectedMenu.id),
-          {
-            sort: s => s.order(SortDirection.ASCENDING) && s.createdAt(SortDirection.ASCENDING),
-          },
-        )
-
-        for (const category of menuCategories) {
-          const menuItems = await DataStore.query(
-            MenuItem,
-            menuItem => menuItem.menucategoryID('eq', category.id),
-            {
-              sort: s => s.createdAt(SortDirection.ASCENDING),
-            },
-          )
-
-          menu.push({
-            category,
-            items: menuItems,
-          })
-        }
-
-        this.$patch((state) => {
-          state.menu = JSON.parse(JSON.stringify(menu))
-        })
-
-        NProgress.done()
-        return this.menu
-      }
+      const { menu, menus, business } = allInfo.data
+      console.log(allInfo)
+      this.menu = menu.Categories
+      this.menus = menus
+      this.businessInfo = business
+      console.log(this.menus)
+      NProgress.done()
+      return this.menu
     },
+
     async addMenu(payload) {
       const authStore = useAuthStore()
 
@@ -355,4 +314,4 @@ export const useAdminMenu = defineStore({
 })
 
 if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(useAdminMenu, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useAdminMenu2, import.meta.hot))
