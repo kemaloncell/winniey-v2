@@ -40,11 +40,11 @@ const props = defineProps({
   },
   collapseOpen: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
 
-const isCollapse = ref(false)
+const isCollapse = ref(true)
 
 watchEffect(() => {
   isCollapse.value = props.collapseOpen

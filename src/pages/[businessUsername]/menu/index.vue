@@ -35,7 +35,7 @@ const userMenu2 = computed(() => menu2.getMenu)
 
 const businessInfo = computed(() => menu2.getBusinessInfo)
 
-const isCollapse = ref(false)
+const isCollapse = ref(true)
 
 const isCollapseOpen = computed(() => {
   return menu.getFilteredMenu.length > 0 || isCollapse.value
