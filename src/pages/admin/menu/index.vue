@@ -17,6 +17,7 @@
             <carbon-menu />
           </button>
           <menu-category
+
             class="flex-1"
             :category-data="element"
             :collapse-open="isCollapseOpen"
@@ -126,10 +127,12 @@ import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
 import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
 import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
 import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes
 import MenuDropdown from '~/pages/admin/menu/components/MenuDropdown.vue'
 
 const adminMenu = useAdminMenu()
+const adminMenu2 = useAdminMenu2()
 const isCreateMenuModalShow = ref(false)
 const isAddModal = ref(false)
 const isEditModal = ref(false)
@@ -187,6 +190,8 @@ const data = computed({
 const selectedMenu = computed(() => adminMenu.getSelectedMenu)
 
 adminMenu.fetchMenu()
+adminMenu2.fetchAllInfo()
+
 </script>
 
 <route lang="yaml">
