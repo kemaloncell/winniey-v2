@@ -62,7 +62,7 @@ const { getCurrency } = useCurrency()
 const basket = useBasketStore()
 const menuItemImage = computed(() => {
   const { images } = props.menuItemData
-  const image = images.length ? images[0] : null
+  const image = images && images.length ? images[0] : null
   if (!image)
     return false
   return `https://winniey-storage-d2iie9fdmnebxs125556-staging.s3.amazonaws.com/public/${image}`

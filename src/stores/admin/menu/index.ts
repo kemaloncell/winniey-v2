@@ -112,12 +112,10 @@ export const useAdminMenu2 = defineStore({
 
     async fetchAllInfo() {
       NProgress.start()
-      const id = 3
-      const allInfo = await menuService.getAll(id)
-      console.log(allInfo)
-
+      const route = useRoute();
+      const businessUsername = route.params.businessUsername;
+      const allInfo = await menuService.getAll(businessUsername)
       const { menu, menus, business } = allInfo.data
-      console.log(allInfo)
       this.menu = menu.Categories
       this.menus = menus
       this.businessInfo = business
