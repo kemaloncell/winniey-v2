@@ -16,10 +16,10 @@
           <div class="flex flex-col items-left">
             <span class="card-title">{{ menuItemData.name }}</span>
             <p
-              v-if="menuItemData.description"
+              v-if="menuItemData.desc"
               class="text-base-content text-opacity-40"
             >
-              {{ menuItemData.description }}
+              {{ menuItemData.desc }}
             </p>
             <div class="flex items-center gap-3 mt-2">
               <slot name="basket">
