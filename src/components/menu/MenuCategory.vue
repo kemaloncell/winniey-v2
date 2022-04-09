@@ -13,14 +13,15 @@
         @click="onClickTitle"
       >
         <div class="xs:w-16 sm:w-16 md:w-16 lg:w-64">
-          {{ props.categoryData.name }}
+          {{ props.categoryData.category.name }}
+
         </div>
       </div>
 
       <div class="collapse-content">
         <slot name="header" />
         <menu-item
-          v-for="menuItem in props.categoryData.Items"
+          v-for="menuItem in props.categoryData.items"
           :key="menuItem.id"
           :menu-item-data="menuItem"
         >
