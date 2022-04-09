@@ -1,6 +1,7 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import NProgress from 'nprogress'
 import { menuService } from '~/../api/menuService'
+import { useAuthStore } from '~/stores/auth'
 export const useAdminMenu2 = defineStore({
   id: 'adminMenu2',
 
@@ -112,12 +113,10 @@ export const useAdminMenu2 = defineStore({
 
     async fetchAllInfo() {
       NProgress.start()
-      const id = 3
-      const allInfo = await menuService.getAll(id)
-      console.log(allInfo)
-
+      const route = useRoute()
+      const businessUsername = route.params.businessUsername
+      const allInfo = await menuService.getAll(businessUsername)
       const { menu, menus, business } = allInfo.data
-      console.log(allInfo)
       this.menu = menu.Categories
       this.menus = menus
       this.businessInfo = business
@@ -128,21 +127,16 @@ export const useAdminMenu2 = defineStore({
 
     async addMenu(payload) {
       const authStore = useAuthStore()
-
-      const result = await DataStore.save(
-        new Menu({
-          businessID: authStore.currentBusiness?.id,
-          name: payload.name,
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          state.selectedMenu = result
-          state.menus.push(JSON.parse(JSON.stringify(result)))
-        })
-      }
+      console.log(payload, 'payload')
+      console.log(authStore.currentBusiness, 'authStore')
+      const result = await menuService.createMenu({
+        businessID: authStore.currentBusiness?.id,
+        name: payload,
+      })
+      if (result)
+        this.menus.push(result.data)
     },
+
     async updateMenu(payload) {
       const original = await DataStore.query(Menu, payload.menu.id)
       const result = await DataStore.save(

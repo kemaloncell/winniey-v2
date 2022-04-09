@@ -10,8 +10,8 @@ class MenuService extends BaseService {
     return super.get(`/business-menu-list/${businessId}`)
   }
 
-  async getAll(businessId) {
-    return super.get(`/all/${businessId}`)
+  async getAll(businessUsername) {
+    return super.get(`/all/${businessUsername}`)
   }
 
   async getById(menuId) {
@@ -19,7 +19,7 @@ class MenuService extends BaseService {
     return result
   }
 
-  async create(data) {
+  async createMenu(data) {
     const result = super.post('/', data)
     return result
   }
