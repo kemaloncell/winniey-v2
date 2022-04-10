@@ -10,6 +10,11 @@
 </template>
 <script setup>
 import TableTable from './components/TableTable.vue'
+import { useAdminTables } from '~/stores/admin/table'
+
+const adminTables = useAdminTables()
+
+adminTables.fetchTables()
 
 </script>
 <route lang="yaml">

@@ -10,8 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>A9</td>
+        <tr v-for="table in getTables">
+          <td>{{ table.tableName }}</td>
           <td>
             <div class="flex justify-center gap-2">
               <button class="btn btn-sm btn-primary">
@@ -27,3 +27,12 @@
     </table>
   </div>
 </template>
+<script setup>
+import { useAdminTables } from '~/stores/admin/table'
+
+const adminTables = useAdminTables()
+
+const getTables = computed(() => {
+  return adminTables.getTables
+})
+</script>
