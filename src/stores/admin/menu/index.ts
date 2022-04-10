@@ -117,6 +117,7 @@ export const useAdminMenu2 = defineStore({
       const businessUsername = route.params.businessUsername
       const allInfo = await menuService.getAll(businessUsername)
       const { menu, menus, business } = allInfo.data
+      console.log(allInfo)
       this.menu = menu.Categories
       this.menus = menus
       this.businessInfo = business

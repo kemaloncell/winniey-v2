@@ -12,7 +12,7 @@
     </template>
     <template #action>
       <button class="btn" @click="onClose">
-        Vazgeç
+        Kapat
       </button>
     </template>
   </global-modal>

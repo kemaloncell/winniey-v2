@@ -119,13 +119,13 @@
 <script setup lang="ts">
 import draggable from 'vuedraggable'
 // Modals
-import AddMenu from './modals/AddMenu.vue'
 import AddCategoryModal from '~/pages/admin/menu/components/AddCategoryModal.vue'
 import EditModal from '~/pages/admin/menu/components/EditModal.vue'
 import DeleteModal from '~/pages/admin/menu/components/DeleteModal.vue'
 import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
 import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
 import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
+import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
 import { useAdminMenu } from '~/stores/admin'
 import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes

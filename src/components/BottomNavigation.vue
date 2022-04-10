@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-0">
+  <div class="w-full p-0 ">
     <!-- <section id="bottom-navigation" class="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow"> // if shown only tablet/mobile-->
     <section id="bottom-navigation" class="block fixed inset-x-0 bottom-0 z-10 bg-base-200 navbar">
       <div id="tabs" class="flex justify-between">
