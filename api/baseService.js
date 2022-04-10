@@ -1,9 +1,14 @@
 import axios from 'axios'
 
 class BaseService {
-  constructor(baseURL) {
+  constructor(url) {
+    const nodeEnv = process.env.NODE_ENV
+
+    const base = nodeEnv !== 'development' ? 'https://winniey-backend.herokuapp.com/api' : 'http://localhost:3008/api'
+
     this.http = axios.create({
-      baseURL,
+      baseURL: `${base}/${url}`,
+      withCredentials: true,
     })
   }
 

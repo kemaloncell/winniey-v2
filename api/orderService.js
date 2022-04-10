@@ -2,8 +2,7 @@ import { BaseService } from './baseService'
 
 class OrderService extends BaseService {
   constructor() {
-    const baseAPIUrl = process.env.VUE_APP_BASE_API
-    super(`${baseAPIUrl}/order`)
+    super('order')
   }
 
   async getAllList(parameters) {
@@ -20,7 +19,6 @@ class OrderService extends BaseService {
     const result = super.delete(`/?id=${id}`)
     return result
   }
-
 
   async update({ data, id }) {
     const result = super.put(`/?id=${id}`, data)
