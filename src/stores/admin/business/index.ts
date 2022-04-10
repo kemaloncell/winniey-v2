@@ -13,13 +13,21 @@ export const useAdminBusiness = defineStore({
   },
   actions: {
     async fetchBusiness() {
-      NProgress.start()
-      const route = useRoute()
+      if (!this.business?.id) {
+        NProgress.start()
 
-      const { businessUsername } = route.params
-      this.business = await businessService.getByUsername(businessUsername)
+        const route = useRoute()
 
-      NProgress.done()
+        const { businessUsername } = route.params
+        const { data } = await businessService.getByUsername(businessUsername)
+
+        this.business = data;
+
+        NProgress.done()
+
+        return this.business
+      }
+      return this.business
     },
   },
 })

@@ -2,8 +2,7 @@ import { BaseService } from './baseService'
 
 class MenuService extends BaseService {
   constructor() {
-    const baseAPIUrl = process.env.VUE_APP_BASE_API || "https://winniey-backend.herokuapp.com/api"
-    super(`${baseAPIUrl}/menu`)
+    super('menu')
   }
 
   async getMenuList(businessId) {

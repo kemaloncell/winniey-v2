@@ -2,8 +2,7 @@ import { BaseService } from './baseService'
 
 class BusinessService extends BaseService {
   constructor() {
-    const baseAPIUrl = process.env.VUE_APP_BASE_API || 'https://winniey-backend.herokuapp.com/api'
-    super(`${baseAPIUrl}/business`)
+    super('business')
   }
 
   async getByUsername(username) {

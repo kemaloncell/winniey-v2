@@ -19,10 +19,10 @@
             <span class="label-text">İşletme Açıklaması</span>
           </label>
           <input
-              v-model="menu.description"
-              type="text"
-              placeholder="İşletme açıklaması."
-              class="input input-bordered"
+            v-model="menu.description"
+            type="text"
+            placeholder="İşletme açıklaması."
+            class="input input-bordered"
           >
         </div>
       </div>
