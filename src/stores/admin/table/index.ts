@@ -24,6 +24,23 @@ export const useAdminTables = defineStore({
 
       NProgress.done()
     },
+    async addTable(payload) {
+      NProgress.start()
+
+      const { data } = await tableService.create(payload)
+      this.tables.push(data)
+
+      NProgress.done()
+    },
+    async updateTable(payload) {
+      NProgress.start()
+      const { id, update } = payload
+      const { data } = await tableService.update(id, update)
+      const index = this.tables.findIndex(table => table.id === data.id)
+      this.tables.splice(index, 1, data)
+
+      NProgress.done()
+    },
   },
 })
 

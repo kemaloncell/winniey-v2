@@ -1,15 +1,15 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      Masa Ekle
+      {{ props.isEdit ? 'Masa Güncelle' : 'Masa Ekle' }}
     </template>
     <template #body>
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Menü Adı</span>
+          <span class="label-text">Masa Adı</span>
         </label>
         <input
-          v-model="menuName"
+          v-model="tableName"
           type="text"
           placeholder="Masa adı giriniz. Örneğin: Masa-1"
           class="input input-bordered"
@@ -20,9 +20,9 @@
       <button
         class="btn btn-primary"
         :disabled="isSaveButtonDisabled"
-        @click="addMenu"
+        @click="onClickSave"
       >
-        Ekle
+        {{ props.isEdit ? 'Güncelle' : 'Ekle' }}
       </button>
       <button class="btn" @click="onClose">
         Vazgeç
@@ -32,24 +32,60 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminTables } from '~/stores/admin/table'
+import { useAdminBusiness } from '~/stores/admin/business'
 
 const props = defineProps({
   show: {
     type: Boolean,
     required: true,
   },
+  isEdit: {
+    type: Boolean,
+    default: false,
+  },
+  table: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu()
-const menuName = ref('')
+const adminTables = useAdminTables()
+const adminBusiness = useAdminBusiness()
+const tableName = ref('')
 const isSaveButtonDisabled = ref(false)
 
-const addMenu = async() => {
+watchEffect(() => {
+  if (props.isEdit)
+    tableName.value = props.table.tableName
+  else
+    tableName.value = ''
+})
+
+const onClickSave = () => {
+  if (props.isEdit)
+    updateTable()
+  else
+    addTable()
+}
+
+const addTable = async() => {
   isSaveButtonDisabled.value = true
-  await adminMenu.addMenu({
-    name: menuName.value,
+  await adminTables.addTable({
+    tableName: tableName.value,
+    businessId: adminBusiness.getBusiness.id,
+  })
+  onClose()
+}
+
+const updateTable = async() => {
+  isSaveButtonDisabled.value = true
+  await adminTables.updateTable({
+    id: props.table.id,
+    update: {
+      tableName: tableName.value,
+    },
   })
   onClose()
 }
