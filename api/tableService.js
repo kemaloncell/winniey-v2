@@ -12,6 +12,10 @@ class TableService extends BaseService {
   async create(data) {
     return super.post('/', data)
   }
+
+  async update(tableId, data) {
+    return super.put(`/${tableId}`, data)
+  }
 }
 
 const tableService = new TableService()
