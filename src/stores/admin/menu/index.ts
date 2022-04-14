@@ -8,7 +8,7 @@ export const useAdminMenu2 = defineStore({
   id: 'adminMenu2',
 
   state: () => ({
-    menu: {},
+    menu: [],
     menus: [],
     filteredMenu: [],
     selectedMenu: null,
@@ -46,6 +46,7 @@ export const useAdminMenu2 = defineStore({
     },
     search(searchText) {
       const query = searchText.trim().toLowerCase()
+      console.log(query)
       if (!query || query.length < 2) {
         this.filteredMenu = []
         return
@@ -54,7 +55,7 @@ export const useAdminMenu2 = defineStore({
       const filteredMenu = []
 
       this.menu.forEach((menuCategory) => {
-        const filteredItems = menuCategory.items.filter((item) => {
+        const filteredItems = menuCategory.Items.filter((item) => {
           return (
             item.name.toLowerCase().includes(query)
                         || item.description.toLowerCase().includes(query)
@@ -62,12 +63,11 @@ export const useAdminMenu2 = defineStore({
         })
 
         if (filteredItems.length > 0) {
-          filteredMenu.push({
-            category: menuCategory.category,
-            items: filteredItems,
-          })
+
         }
       })
+
+      console.log(filteredItems)
 
       this.filteredMenu = filteredMenu
     },
@@ -120,6 +120,7 @@ export const useAdminMenu2 = defineStore({
         const allInfo = await menuService.getAll(businessUsername)
         const { menu, menus, business } = allInfo.data
         this.menu = menu.Categories
+        this.selectedMenu = { ...menu, Categories: [] }
         this.menus = menus
         this.businessInfo = business
         NProgress.done()
@@ -287,21 +288,17 @@ export const useAdminMenu2 = defineStore({
           id: payload.itemId,
           data: payload.update,
         })
-        NProgress.done()
-        if (result) {
-          this.$patch((state) => {
-            const categoryItem = state.menu.find(
-              f => f.category.id === payload.category.id,
-            )
-            const item = categoryItem.items.find(
-              f => f.id === payload.item.id,
-            )
-            Object.entries(payload.update).forEach(([key, value]) => {
-              item[key] = value
+        this.$patch((state) => {
+          state.menu.forEach((category) => {
+            category.Items.forEach((item) => {
+              if (item.id === payload.itemId) {
+                Object.entries(payload.update).forEach(([key, value]) => {
+                  item[key] = value
+                })
+              }
             })
           })
-        }
-        return result
+        })
       }
       catch (error) {
         console.log(error)

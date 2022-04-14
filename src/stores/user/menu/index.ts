@@ -12,7 +12,8 @@ export const useUserMenu2 = defineStore({
     businessInfo: null,
   }),
   getters: {
-    getMenu: state => state.menu,
+    getMenu: state =>
+      state.filteredMenu.length > 0 ? state.filteredMenu : state.menu,
     getFilteredMenu: state => state.filteredMenu,
     getMenus: state => state.menus,
     getSelectedMenu: state => state.selectedMenu,
@@ -39,6 +40,32 @@ export const useUserMenu2 = defineStore({
 
       NProgress.done()
       return this.menu
+    },
+    search(searchText) {
+      const query = searchText.trim().toLowerCase()
+      if (!query || query.length < 2) {
+        this.filteredMenu = []
+        return
+      }
+
+      const filteredMenu = []
+
+      this.menu.forEach((menuCategory) => {
+        const filteredItems = menuCategory.Items.filter((item) => {
+          return (
+            item.name.toLowerCase().includes(query)
+          )
+        })
+
+        if (filteredItems.length > 0) {
+          filteredMenu.push({
+            ...menuCategory,
+            Items: filteredItems,
+          })
+        }
+      })
+
+      this.filteredMenu = filteredMenu
     },
   },
 })

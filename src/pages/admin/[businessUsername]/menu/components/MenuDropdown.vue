@@ -65,13 +65,14 @@ const isAddMenuModalShow = ref(false)
 const isDeleteMenuModalShow = ref(false)
 const isSettingsModalShow = ref(false)
 
-const selectedItemId = ref()
+const selectedItemId = ref('')
 
 const selectedMenu = computed(() => {
   return adminMenu.getSelectedMenu
 })
 
 watchEffect(() => {
+  console.log('selectedItemId', selectedMenu.value)
   selectedItemId.value = selectedMenu.value?.id
 })
 

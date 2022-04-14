@@ -9,10 +9,10 @@
 
 <script setup lang="ts">
 import { watchEffect } from '@vue/runtime-core'
-import { useUserMenu } from '~/stores/user'
+import { useUserMenu2 } from '~/stores/user/menu'
 
 const searchText = ref('')
-const userMenu = useUserMenu()
+const userMenu = useUserMenu2()
 
 watchEffect(() => {
   userMenu.search(searchText.value)
