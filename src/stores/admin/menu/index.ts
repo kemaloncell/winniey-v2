@@ -257,10 +257,12 @@ export const useAdminMenu2 = defineStore({
 
     async updateCategory(payload) {
       try {
+        NProgress.start()
         const result = await categoryService.update({
           id: payload.categoryId,
           data: payload.update,
         })
+        NProgress.done()
         if (result) {
           this.$patch((state) => {
             const categoryItem = state.menu.find(
@@ -280,10 +282,12 @@ export const useAdminMenu2 = defineStore({
 
     async updateMenuItem(payload) {
       try {
+        NProgress.start()
         const result = await itemService.update({
           id: payload.itemId,
           data: payload.update,
         })
+        NProgress.done()
         if (result) {
           this.$patch((state) => {
             const categoryItem = state.menu.find(
@@ -322,29 +326,31 @@ export const useAdminMenu2 = defineStore({
       catch (error) {
         console.log(error)
       }
-
-      /*      const deleteCategoryObject = await DataStore.query(
-        MenuCategory,
-        payload.category.id,
-      )
-
-      const result = await DataStore.delete(deleteCategoryObject)
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          state.menu.splice(state.menu.indexOf(category), 1)
-        })
-      }
-
-      return result */
     },
 
     async deleteMenuItem(payload) {
-      const deleteItem = await DataStore.query(MenuItem, payload.id)
+      try {
+        NProgress.start()
+        const result = await itemService.delete(payload.id)
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            const item = category.items.find(
+              f => f.id === payload.item.id,
+            )
+            category.items.splice(category.items.indexOf(item), 1)
+          })
+        }
+        return result
+      }
+      catch (error) {
+        console.log(error)
+      }
 
+      /*
       const result = await DataStore.delete(deleteItem)
       if (deleteItem?.image)
         await Storage.remove(deleteItem.image)
@@ -359,7 +365,7 @@ export const useAdminMenu2 = defineStore({
         })
       }
 
-      return result
+      return result */
     },
   },
 })

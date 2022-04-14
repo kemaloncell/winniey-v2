@@ -120,7 +120,7 @@ import DeleteModal from './components/DeleteModal.vue'
 import ChildAddModal from './components/ChildAddModal.vue'
 import MenuDropdown from './components/MenuDropdown.vue'
 import ChildEditModal from './components/ChildEditModal.vue'
-import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
+import ChildDeleteModal from './components/ChildDeleteModal.vue'
 import { useAdminMenu } from '~/stores/admin'
 import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes
