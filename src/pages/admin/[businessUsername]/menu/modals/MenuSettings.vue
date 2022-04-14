@@ -19,10 +19,10 @@
             <span class="label-text">İşletme Açıklaması</span>
           </label>
           <input
-            v-model="menu.description"
-            type="text"
-            placeholder="İşletme açıklaması."
-            class="input input-bordered"
+              v-model="menu.description"
+              type="text"
+              placeholder="İşletme açıklaması."
+              class="input input-bordered"
           >
         </div>
       </div>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu2 } from '~/stores/admin/menu'
+import { useAdminMenu } from '~/stores/admin'
 
 const props = defineProps({
   show: {
@@ -57,7 +57,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu2()
+const adminMenu = useAdminMenu()
 const menu = ref({})
 const isSaveButtonDisabled = ref(false)
 

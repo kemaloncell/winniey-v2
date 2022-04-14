@@ -1,6 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import NProgress from 'nprogress'
 import { menuService } from '~/../api/menuService'
+import { categoryService } from '~/../api/categoryService'
+import { itemService } from '~/../api/itemService'
+import { useAuthStore } from '~/stores/auth'
 export const useAdminMenu2 = defineStore({
   id: 'adminMenu2',
 
@@ -12,8 +15,7 @@ export const useAdminMenu2 = defineStore({
     businessInfo: null,
   }),
   getters: {
-    getMenu: state =>
-      state.filteredMenu.length > 0 ? state.filteredMenu : state.menu,
+    getMenu: state => state.menu,
     getFilteredMenu: state => state.filteredMenu,
     getMenus: state => state.menus,
     getSelectedMenu: state => state.selectedMenu,
@@ -111,187 +113,244 @@ export const useAdminMenu2 = defineStore({
     },
 
     async fetchAllInfo() {
-      NProgress.start()
-      const route = useRoute();
-      const businessUsername = route.params.businessUsername;
-      const allInfo = await menuService.getAll(businessUsername)
-      const { menu, menus, business } = allInfo.data
-      this.menu = menu.Categories
-      this.menus = menus
-      this.businessInfo = business
-      console.log(this.menus)
-      NProgress.done()
-      return this.menu
+      try {
+        NProgress.start()
+        const route = useRoute()
+        const businessUsername = route.params.businessUsername
+        const allInfo = await menuService.getAll(businessUsername)
+        const { menu, menus, business } = allInfo.data
+        this.menu = menu.Categories
+        this.menus = menus
+        this.businessInfo = business
+        NProgress.done()
+        return this.menu
+      }
+      catch (error) {
+        NProgress.done()
+        console.log(error)
+      }
+    },
+
+    async fetchSelectedMenu(menuID) {
+      try {
+        NProgress.start()
+        const { data } = await menuService.getById(menuID)
+        this.menu = data.Categories
+        NProgress.done()
+        return this.menu
+      }
+      catch (error) {
+        NProgress.done()
+        console.log(error)
+      }
     },
 
     async addMenu(payload) {
-      const authStore = useAuthStore()
-
-      const result = await DataStore.save(
-        new Menu({
-          businessID: authStore.currentBusiness?.id,
-          name: payload.name,
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          state.selectedMenu = result
-          state.menus.push(JSON.parse(JSON.stringify(result)))
+      try {
+        NProgress.start()
+        const businessUsername = this.businessInfo?.username
+        const result = await menuService.create({
+          ...payload,
+          businessUsername,
         })
+        NProgress.done()
+        if (result)
+          this.menus.push(result.data)
+      }
+      catch (error) {
+        console.log(error)
       }
     },
-    async updateMenu(payload) {
-      const original = await DataStore.query(Menu, payload.menu.id)
-      const result = await DataStore.save(
-        Menu.copyOf(original, (updated) => {
-          updated.name = payload.update.name
-          updated.description = payload.update.description
-        }),
-      )
 
-      if (result) {
-        this.$patch((state) => {
-          const menu = state.menus.find(menu => menu.id === payload.menu.id)
-          menu.name = payload.update.name
-          menu.description = payload.update.description
+    async updateMenu(payload) {
+      try {
+        NProgress.start()
+        const result = await menuService.update({
+          id: payload.menu.id,
+          data: payload.update,
         })
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const menu = state.menus.find(menu => menu.id === payload.menu.id)
+            menu.name = payload.update.name
+            menu.description = payload.update.description
+          })
+        }
+      }
+      catch (error) {
+        console.log(error)
       }
     },
     async deleteMenu(payload) {
-      const deletedMenuObject = await DataStore.query(Menu, payload.menu.id)
-
-      const result = await DataStore.delete(deletedMenuObject)
-
-      if (result) {
-        this.$patch((state) => {
-          const menu = state.menus.find(
-            menuObject => menuObject.id === payload.menu.id,
-          )
-          state.menus.splice(state.menu.indexOf(menu), 1)
-          if (state.menus.length === 0)
-            state.selectedMenu = {}
-          else
-            state.selectedMenu = state.menus[0]
-        })
+      try {
+        NProgress.start()
+        const result = await menuService.delete(payload.menu.id)
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const menu = state.menus.find(
+              menuObject => menuObject.id === payload.menu.id,
+            )
+            state.menus.splice(state.menu.indexOf(menu), 1)
+            if (state.menus.length === 0)
+              state.selectedMenu = {}
+            else
+              state.selectedMenu = state.menus[0]
+          })
+        }
+      }
+      catch (error) {
+        console.log(error)
       }
     },
+
     async postCategory(payload) {
-      const result = await DataStore.save(
-        new MenuCategory({
-          menuID: this.selectedMenu.id,
+      const businessUsername = this.businessInfo?.username
+      try {
+        const result = await categoryService.create({
+          menuId: this.selectedMenu.id,
           name: payload.name,
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          state.menu.push({
-            category: JSON.parse(JSON.stringify(result)),
-            items: [],
-          })
+          businessUsername,
         })
+        if (result) {
+          this.$patch((state) => {
+            state.menu.push({
+              category: JSON.parse(JSON.stringify(result)),
+              items: [],
+            })
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async postMenuItem(payload) {
-      const result = await DataStore.save(
-        new MenuItem({
-          menucategoryID: payload.category.id,
+      const businessUsername = this.businessInfo?.username
+      try {
+        const result = await itemService.create({
+          categoryId: payload.id,
           name: payload.fields.name,
           description: payload.fields.description,
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          if (!category?.items)
-            category.items = []
-
-          category.items.push(JSON.parse(JSON.stringify(result)))
+          businessUsername,
         })
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            if (!category?.items)
+              category.items = []
+
+            category.items.push(JSON.parse(JSON.stringify(result)))
+          })
+        }
+        return result
       }
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async updateCategory(payload) {
-      const original = await DataStore.query(MenuCategory, payload.category.id)
-      const result = await DataStore.save(
-        MenuCategory.copyOf(original, (updated) => {
-          Object.entries(payload.update).forEach(([key, value]) => {
-            updated[key] = value
-          })
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const categoryItem = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          Object.entries(payload.update).forEach(([key, value]) => {
-            categoryItem.category[key] = value
-          })
+      try {
+        NProgress.start()
+        const result = await categoryService.update({
+          id: payload.categoryId,
+          data: payload.update,
         })
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const categoryItem = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            Object.entries(payload.update).forEach(([key, value]) => {
+              categoryItem.category[key] = value
+            })
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async updateMenuItem(payload) {
-      const original = await DataStore.query(MenuItem, payload.menuItem.id)
-
-      const result = await DataStore.save(
-        MenuCategory.copyOf(original, (updated) => {
-          Object.entries(payload.update).forEach(([key, value]) => {
-            updated[key] = value
-          })
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.menuItem.menucategoryID,
-          )
-          const item = category.items.find(f => f.id === payload.menuItem.id)
-          Object.entries(payload.update).forEach(([key, value]) => {
-            item[key] = value
-          })
+      try {
+        NProgress.start()
+        const result = await itemService.update({
+          id: payload.itemId,
+          data: payload.update,
         })
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const categoryItem = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            const item = categoryItem.items.find(
+              f => f.id === payload.item.id,
+            )
+            Object.entries(payload.update).forEach(([key, value]) => {
+              item[key] = value
+            })
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async deleteCategory(payload) {
-      const deleteCategoryObject = await DataStore.query(
-        MenuCategory,
-        payload.category.id,
-      )
-
-      const result = await DataStore.delete(deleteCategoryObject)
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          state.menu.splice(state.menu.indexOf(category), 1)
-        })
+      try {
+        NProgress.start()
+        const result = await categoryService.delete(payload.id)
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            state.menu.splice(state.menu.indexOf(category), 1)
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async deleteMenuItem(payload) {
-      const deleteItem = await DataStore.query(MenuItem, payload.id)
+      try {
+        NProgress.start()
+        const result = await itemService.delete(payload.id)
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            const item = category.items.find(
+              f => f.id === payload.item.id,
+            )
+            category.items.splice(category.items.indexOf(item), 1)
+          })
+        }
+        return result
+      }
+      catch (error) {
+        console.log(error)
+      }
 
+      /*
       const result = await DataStore.delete(deleteItem)
       if (deleteItem?.image)
         await Storage.remove(deleteItem.image)
@@ -306,7 +365,7 @@ export const useAdminMenu2 = defineStore({
         })
       }
 
-      return result
+      return result */
     },
   },
 })

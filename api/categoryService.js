@@ -1,8 +1,8 @@
 import { BaseService } from './baseService'
 
-class MenuService extends BaseService {
+class CategoryService extends BaseService {
   constructor() {
-    super('menu')
+    super('category')
   }
 
   async getMenuList(businessId) {
@@ -23,8 +23,8 @@ class MenuService extends BaseService {
     return result
   }
 
-  async delete(menuId) {
-    const result = super.delete(`/${menuId}`)
+  async delete(id) {
+    const result = super.delete(`/${id}`)
     return result
   }
 
@@ -34,6 +34,6 @@ class MenuService extends BaseService {
   }
 }
 
-const menuService = new MenuService()
+const categoryService = new CategoryService()
 
-export { menuService }
+export { categoryService }

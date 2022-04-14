@@ -1,37 +1,26 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      Menü Ayarları
+      Kategori Ekle
     </template>
     <template #body>
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Menü Adı</span>
+          <span class="label-text">Kategori Adı</span>
         </label>
         <input
-          v-model="menu.name"
+          v-model="categoryName"
           type="text"
-          placeholder="Menü adı giriniz. Örneğin: Türkçe"
+          placeholder="Kategori adı giriniz. Örneğin: Tatlılar"
           class="input input-bordered"
         >
-        <div class="form-control mt-4">
-          <label class="label">
-            <span class="label-text">İşletme Açıklaması</span>
-          </label>
-          <input
-            v-model="menu.description"
-            type="text"
-            placeholder="İşletme açıklaması."
-            class="input input-bordered"
-          >
-        </div>
       </div>
     </template>
     <template #action>
       <button
         class="btn btn-primary"
         :disabled="isSaveButtonDisabled"
-        @click="addMenu"
+        @click="postCategory"
       >
         Kaydet
       </button>
@@ -50,28 +39,25 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  menu: {
-    type: Object,
-    required: true,
-  },
 })
 
 const emit = defineEmits()
 const adminMenu = useAdminMenu2()
-const menu = ref({})
+const categoryName = ref('')
 const isSaveButtonDisabled = ref(false)
 
-watchEffect(() => (menu.value = JSON.parse(JSON.stringify(props.menu))))
+watchEffect(() => {
+  if (categoryName.value?.length > 0)
+    isSaveButtonDisabled.value = false
+  else
+    isSaveButtonDisabled.value = true
+})
 
-const addMenu = async() => {
+const postCategory = async() => {
   isSaveButtonDisabled.value = true
 
-  adminMenu.updateMenu({
-    menu: menu.value,
-    update: {
-      name: menu.value.name,
-      description: menu.value.description,
-    },
+  await adminMenu.postCategory({
+    name: categoryName.value,
   })
 
   onClose()

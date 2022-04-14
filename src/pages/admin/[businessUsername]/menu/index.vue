@@ -34,7 +34,7 @@
                 <carbon-edit class="w-8 h-5" />
               </button>
               <button
-                v-if="element.items && element.items.length === 0"
+                v-if="element.Items && element.Items.length === 0"
                 class="btn btn-sm ml-4 bg-red-500"
                 @click="onDeleteModal(element)"
               >
@@ -108,31 +108,24 @@
       @close="isChildDeleteModal = false"
     />
     <!--Child Delete Modal End-->
-
-    <add-menu
-      :show="isCreateMenuModalShow"
-      @close="isCreateMenuModalShow = false"
-    />
   </div>
 </template>
 <script setup lang="ts">
 import draggable from 'vuedraggable'
 // Modals
-import AddCategoryModal from '~/pages/admin/menu/components/AddCategoryModal.vue'
-import EditModal from '~/pages/admin/menu/components/EditModal.vue'
-import DeleteModal from '~/pages/admin/menu/components/DeleteModal.vue'
-import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
-import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
-import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
-import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
+import AddCategoryModal from './components/AddCategoryModal.vue'
+import EditModal from './components/EditModal.vue'
+import DeleteModal from './components/DeleteModal.vue'
+import ChildAddModal from './components/ChildAddModal.vue'
+import MenuDropdown from './components/MenuDropdown.vue'
+import ChildEditModal from './components/ChildEditModal.vue'
+import ChildDeleteModal from './components/ChildDeleteModal.vue'
 import { useAdminMenu } from '~/stores/admin'
 import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes
-import MenuDropdown from '~/pages/admin/menu/components/MenuDropdown.vue'
 
 const adminMenu = useAdminMenu()
 const adminMenu2 = useAdminMenu2()
-const isCreateMenuModalShow = ref(false)
 const isAddModal = ref(false)
 const isEditModal = ref(false)
 const isDeleteModal = ref(false)
@@ -154,9 +147,6 @@ const isCollapseOpen = computed(() => {
   return adminMenu.getFilteredMenu.length > 0
 })
 
-const onClickCreateMenu = () => {
-  isCreateMenuModalShow.value = true
-}
 const onEditModal = (val) => {
   isEditModal.value = !isEditModal.value
   selectedCategory.value = val
@@ -179,7 +169,7 @@ const onChildDeleteModal = (val) => {
 }
 const data = computed({
   get() {
-    return adminMenu.getMenu
+    return adminMenu2.getMenu
   },
   set(value) {
     adminMenu.setDraggedMenuCategory(value)

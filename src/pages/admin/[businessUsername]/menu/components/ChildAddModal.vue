@@ -1,37 +1,35 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      Menü Ayarları
+      İçerik Ekle
     </template>
     <template #body>
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Menü Adı</span>
+          <span class="label-text">İçerik Adı</span>
         </label>
         <input
-          v-model="menu.name"
+          v-model="menuItemName"
           type="text"
-          placeholder="Menü adı giriniz. Örneğin: Türkçe"
           class="input input-bordered"
+          placeholder="Örneğin: Trileçe"
         >
-        <div class="form-control mt-4">
-          <label class="label">
-            <span class="label-text">İşletme Açıklaması</span>
-          </label>
-          <input
-            v-model="menu.description"
-            type="text"
-            placeholder="İşletme açıklaması."
-            class="input input-bordered"
-          >
-        </div>
+        <label class="label">
+          <span class="label-text">Açıklama</span>
+        </label>
+        <input
+          v-model="menuItemDesc"
+          type="text"
+          class="input input-bordered"
+          placeholder="Karamel soslu sütlü tatlı"
+        >
       </div>
     </template>
     <template #action>
       <button
         class="btn btn-primary"
         :disabled="isSaveButtonDisabled"
-        @click="addMenu"
+        @click="postMenuItem"
       >
         Kaydet
       </button>
@@ -50,33 +48,38 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  menu: {
+  selectedCategory: {
     type: Object,
-    required: true,
+    default: () => ({}),
   },
 })
 
 const emit = defineEmits()
 const adminMenu = useAdminMenu2()
-const menu = ref({})
 const isSaveButtonDisabled = ref(false)
+const menuItemName = ref('')
+const menuItemDesc = ref('')
 
-watchEffect(() => (menu.value = JSON.parse(JSON.stringify(props.menu))))
+watchEffect(() => {
+  if (menuItemName.value?.length > 0)
+    isSaveButtonDisabled.value = false
+  else
+    isSaveButtonDisabled.value = true
+})
 
-const addMenu = async() => {
+const postMenuItem = async() => {
   isSaveButtonDisabled.value = true
 
-  adminMenu.updateMenu({
-    menu: menu.value,
-    update: {
-      name: menu.value.name,
-      description: menu.value.description,
+  await adminMenu.postMenuItem({
+    fields: {
+      name: menuItemName.value,
+      description: menuItemDesc.value,
     },
+    id: props.selectedCategory?.id,
   })
 
   onClose()
 }
-
 const onClose = () => {
   isSaveButtonDisabled.value = false
   emit('close')

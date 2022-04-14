@@ -10,6 +10,7 @@
       item-key="id"
     >
       <template #item="{ element }">
+        {{element}}
         <div class="flex my-4 gap-1 items-center">
           <button
             class="handle btn btn-ghost  h-full py-1 bordered flex items-center justify-center p-2 text-2xl font-bold cursor-pointer"
@@ -125,7 +126,7 @@ import DeleteModal from '~/pages/admin/menu/components/DeleteModal.vue'
 import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
 import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
 import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
-import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
+import AddMenu from '~/pages/admin/menu/modals/AddMenu2.vue'
 import { useAdminMenu } from '~/stores/admin'
 import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes
@@ -189,7 +190,7 @@ const data = computed({
 
 const selectedMenu = computed(() => adminMenu.getSelectedMenu)
 
-adminMenu.fetchMenu()
+//adminMenu.fetchMenu()
 adminMenu2.fetchAllInfo()
 
 </script>

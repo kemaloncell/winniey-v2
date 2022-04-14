@@ -1,7 +1,7 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      Menü Ayarları
+      Menü Ekle
     </template>
     <template #body>
       <div class="form-control">
@@ -9,22 +9,11 @@
           <span class="label-text">Menü Adı</span>
         </label>
         <input
-          v-model="menu.name"
+          v-model="menuName"
           type="text"
           placeholder="Menü adı giriniz. Örneğin: Türkçe"
           class="input input-bordered"
         >
-        <div class="form-control mt-4">
-          <label class="label">
-            <span class="label-text">İşletme Açıklaması</span>
-          </label>
-          <input
-            v-model="menu.description"
-            type="text"
-            placeholder="İşletme açıklaması."
-            class="input input-bordered"
-          >
-        </div>
       </div>
     </template>
     <template #action>
@@ -50,30 +39,18 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  menu: {
-    type: Object,
-    required: true,
-  },
 })
 
 const emit = defineEmits()
 const adminMenu = useAdminMenu2()
-const menu = ref({})
+const menuName = ref('')
 const isSaveButtonDisabled = ref(false)
-
-watchEffect(() => (menu.value = JSON.parse(JSON.stringify(props.menu))))
 
 const addMenu = async() => {
   isSaveButtonDisabled.value = true
-
-  adminMenu.updateMenu({
-    menu: menu.value,
-    update: {
-      name: menu.value.name,
-      description: menu.value.description,
-    },
+  await adminMenu.addMenu({
+    name: menuName.value,
   })
-
   onClose()
 }
 

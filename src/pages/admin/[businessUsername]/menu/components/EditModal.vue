@@ -1,37 +1,26 @@
 <template>
-  <global-modal :show="show">
+  <global-modal v-if="show" :show="show">
     <template #header>
-      Menü Ayarları
+      Kategori Düzenle
     </template>
     <template #body>
       <div class="form-control">
         <label class="label">
-          <span class="label-text">Menü Adı</span>
+          <span class="label-text">Kategori Adı</span>
         </label>
         <input
-          v-model="menu.name"
+          v-model="categoryName"
           type="text"
-          placeholder="Menü adı giriniz. Örneğin: Türkçe"
+          placeholder="Kategori adı giriniz. Örneğin: Tatlılar"
           class="input input-bordered"
         >
-        <div class="form-control mt-4">
-          <label class="label">
-            <span class="label-text">İşletme Açıklaması</span>
-          </label>
-          <input
-            v-model="menu.description"
-            type="text"
-            placeholder="İşletme açıklaması."
-            class="input input-bordered"
-          >
-        </div>
       </div>
     </template>
     <template #action>
       <button
         class="btn btn-primary"
         :disabled="isSaveButtonDisabled"
-        @click="addMenu"
+        @click="updateCategory"
       >
         Kaydet
       </button>
@@ -50,28 +39,35 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
-  menu: {
+  selectedCategory: {
     type: Object,
-    required: true,
+    default: () => ({}),
   },
 })
 
 const emit = defineEmits()
 const adminMenu = useAdminMenu2()
-const menu = ref({})
+const categoryName = ref('')
 const isSaveButtonDisabled = ref(false)
+console.log()
+watchEffect(
+  () => (categoryName.value = props.selectedCategory?.name),
+)
+watchEffect(() => {
+  if (categoryName.value?.length > 0)
+    isSaveButtonDisabled.value = false
+  else
+    isSaveButtonDisabled.value = true
+})
 
-watchEffect(() => (menu.value = JSON.parse(JSON.stringify(props.menu))))
-
-const addMenu = async() => {
+const updateCategory = async() => {
   isSaveButtonDisabled.value = true
 
-  adminMenu.updateMenu({
-    menu: menu.value,
+  await adminMenu.updateCategory({
     update: {
-      name: menu.value.name,
-      description: menu.value.description,
+      name: categoryName.value,
     },
+    categoryId: props.selectedCategory.id,
   })
 
   onClose()
