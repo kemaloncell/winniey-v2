@@ -116,7 +116,7 @@
 import draggable from 'vuedraggable'
 // Modals
 import AddCategoryModal from './components/AddCategoryModal.vue'
-import EditModal from '~/pages/admin/menu/components/EditModal.vue'
+import EditModal from './components/EditModal.vue'
 import DeleteModal from '~/pages/admin/menu/components/DeleteModal.vue'
 import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
 import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'

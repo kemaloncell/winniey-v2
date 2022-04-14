@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const props = defineProps({
   show: {
@@ -46,12 +46,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 const categoryName = ref('')
 const isSaveButtonDisabled = ref(false)
-
+console.log()
 watchEffect(
-  () => (categoryName.value = props.selectedCategory?.category?.name),
+  () => (categoryName.value = props.selectedCategory?.name),
 )
 watchEffect(() => {
   if (categoryName.value?.length > 0)
@@ -67,7 +67,7 @@ const updateCategory = async() => {
     update: {
       name: categoryName.value,
     },
-    category: props.selectedCategory.category,
+    categoryId: props.selectedCategory.id,
   })
 
   onClose()

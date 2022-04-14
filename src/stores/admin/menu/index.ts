@@ -205,7 +205,6 @@ export const useAdminMenu2 = defineStore({
     },
 
     async postCategory(payload) {
-      console.log(this.selectedMenu.id,'menu id')
       const businessUsername = this.businessInfo?.username
       try {
         const result = await categoryService.create({
@@ -252,27 +251,26 @@ export const useAdminMenu2 = defineStore({
     },
 
     async updateCategory(payload) {
-      const original = await DataStore.query(MenuCategory, payload.category.id)
-      const result = await DataStore.save(
-        MenuCategory.copyOf(original, (updated) => {
-          Object.entries(payload.update).forEach(([key, value]) => {
-            updated[key] = value
-          })
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const categoryItem = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          Object.entries(payload.update).forEach(([key, value]) => {
-            categoryItem.category[key] = value
-          })
+      try {
+        const result = await categoryService.update({
+          id: payload.categoryId,
+          data: payload.update,
         })
+        if (result) {
+          this.$patch((state) => {
+            const categoryItem = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            Object.entries(payload.update).forEach(([key, value]) => {
+              categoryItem.category[key] = value
+            })
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async updateMenuItem(payload) {

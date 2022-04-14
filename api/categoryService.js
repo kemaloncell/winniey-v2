@@ -19,7 +19,6 @@ class CategoryService extends BaseService {
   }
 
   async create(data) {
-    console.log(data,'stores')
     const result = super.post('/', data)
     return result
   }
