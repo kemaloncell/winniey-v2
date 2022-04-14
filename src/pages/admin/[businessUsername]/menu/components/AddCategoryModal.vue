@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const props = defineProps({
   show: {
@@ -42,7 +42,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 const categoryName = ref('')
 const isSaveButtonDisabled = ref(false)
 
