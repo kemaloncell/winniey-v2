@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const props = defineProps({
   show: {
@@ -97,7 +97,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 const menuItemName = ref('')
 const menuItemDesc = ref('')
 const menuItemPrice = ref('')
@@ -130,11 +130,13 @@ const updateMenuItem = async() => {
       currency: menuItemCurrency.value,
       customPriceSymbol: menuItemCustomPriceSymbol.value,
     },
-    menuItem: props.selectedMenuItem,
+    itemId: props.selectedMenuItem.id,
   })
 
   onClose()
 }
+
+console.log(props.selectedMenuItem,'props.selectedMenuItem')
 
 const onClose = () => {
   isSaveButtonDisabled.value = false

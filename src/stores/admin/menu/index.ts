@@ -253,27 +253,6 @@ export const useAdminMenu2 = defineStore({
       catch (error) {
         console.log(error)
       }
-
-      /* const result = await DataStore.save(
-        new MenuItem({
-          menucategoryID: payload.category.id,
-          name: payload.fields.name,
-          description: payload.fields.description,
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.category.id,
-          )
-          if (!category?.items)
-            category.items = []
-
-          category.items.push(JSON.parse(JSON.stringify(result)))
-        })
-      }
-      return result */
     },
 
     async updateCategory(payload) {
@@ -300,29 +279,29 @@ export const useAdminMenu2 = defineStore({
     },
 
     async updateMenuItem(payload) {
-      const original = await DataStore.query(MenuItem, payload.menuItem.id)
-
-      const result = await DataStore.save(
-        MenuCategory.copyOf(original, (updated) => {
-          Object.entries(payload.update).forEach(([key, value]) => {
-            updated[key] = value
-          })
-        }),
-      )
-
-      if (result) {
-        this.$patch((state) => {
-          const category = state.menu.find(
-            f => f.category.id === payload.menuItem.menucategoryID,
-          )
-          const item = category.items.find(f => f.id === payload.menuItem.id)
-          Object.entries(payload.update).forEach(([key, value]) => {
-            item[key] = value
-          })
+      try {
+        const result = await itemService.update({
+          id: payload.itemId,
+          data: payload.update,
         })
+        if (result) {
+          this.$patch((state) => {
+            const categoryItem = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            const item = categoryItem.items.find(
+              f => f.id === payload.item.id,
+            )
+            Object.entries(payload.update).forEach(([key, value]) => {
+              item[key] = value
+            })
+          })
+        }
+        return result
       }
-
-      return result
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async deleteCategory(payload) {
