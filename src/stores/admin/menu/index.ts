@@ -2,6 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import NProgress from 'nprogress'
 import { menuService } from '~/../api/menuService'
 import { categoryService } from '~/../api/categoryService'
+import { itemService } from '~/../api/itemService'
 import { useAuthStore } from '~/stores/auth'
 export const useAdminMenu2 = defineStore({
   id: 'adminMenu2',
@@ -228,7 +229,32 @@ export const useAdminMenu2 = defineStore({
     },
 
     async postMenuItem(payload) {
-      const result = await DataStore.save(
+      const businessUsername = this.businessInfo?.username
+      try {
+        const result = await itemService.create({
+          categoryId: payload.id,
+          name: payload.fields.name,
+          description: payload.fields.description,
+          businessUsername,
+        })
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            if (!category?.items)
+              category.items = []
+
+            category.items.push(JSON.parse(JSON.stringify(result)))
+          })
+        }
+        return result
+      }
+      catch (error) {
+        console.log(error)
+      }
+
+      /* const result = await DataStore.save(
         new MenuItem({
           menucategoryID: payload.category.id,
           name: payload.fields.name,
@@ -247,7 +273,7 @@ export const useAdminMenu2 = defineStore({
           category.items.push(JSON.parse(JSON.stringify(result)))
         })
       }
-      return result
+      return result */
     },
 
     async updateCategory(payload) {

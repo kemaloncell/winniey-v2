@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const props = defineProps({
   show: {
@@ -55,7 +55,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 const isSaveButtonDisabled = ref(false)
 const menuItemName = ref('')
 const menuItemDesc = ref('')
@@ -75,7 +75,7 @@ const postMenuItem = async() => {
       name: menuItemName.value,
       description: menuItemDesc.value,
     },
-    category: props.selectedCategory?.category,
+    id: props.selectedCategory?.id,
   })
 
   onClose()

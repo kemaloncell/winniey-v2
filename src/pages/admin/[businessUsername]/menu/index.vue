@@ -10,7 +10,6 @@
       item-key="id"
     >
       <template #item="{ element }">
-
         <div class="flex my-4 gap-1 items-center">
           <button
             class="handle btn btn-ghost  h-full py-1 bordered flex items-center justify-center p-2 text-2xl font-bold cursor-pointer"
@@ -118,13 +117,13 @@ import draggable from 'vuedraggable'
 import AddCategoryModal from './components/AddCategoryModal.vue'
 import EditModal from './components/EditModal.vue'
 import DeleteModal from './components/DeleteModal.vue'
-import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
+import ChildAddModal from './components/ChildAddModal.vue'
+import MenuDropdown from './components/MenuDropdown.vue'
 import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
 import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'
 import { useAdminMenu } from '~/stores/admin'
 import { useAdminMenu2 } from '~/stores/admin/menu'
 // Tab Componentes
-import MenuDropdown from './components/MenuDropdown.vue'
 
 const adminMenu = useAdminMenu()
 const adminMenu2 = useAdminMenu2()
