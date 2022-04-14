@@ -57,10 +57,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
+import AddMenu from '../modals/AddMenu.vue'
 import MenuSettings from '~/pages/admin/menu/modals/MenuSettings.vue'
-import { useAdminMenu } from '~/stores/admin'
-const adminMenu = useAdminMenu()
+import { useAdminMenu2 } from '~/stores/admin/menu'
+const adminMenu = useAdminMenu2()
 const isAddMenuModalShow = ref(false)
 const isDeleteMenuModalShow = ref(false)
 const isSettingsModalShow = ref(false)
@@ -73,8 +73,6 @@ const selectedMenu = computed(() => {
 
 watchEffect(() => {
   selectedItemId.value = selectedMenu.value?.id
-
-  adminMenu.fetchMenu()
 })
 
 const menus = computed(() => {
@@ -87,7 +85,7 @@ const isDeleteMenuShow = computed((): boolean => {
 
 const onChangeMenu = () => {
   adminMenu.setSelectedMenu(selectedItemId.value)
-  adminMenu.fetchMenu()
+  adminMenu.fetchSelectedMenu(selectedItemId.value)
 }
 
 const selectedItem = computed(() => {

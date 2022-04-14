@@ -57,7 +57,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import AddMenu from '~/pages/admin/menu/modals/AddMenu.vue'
+import AddMenu from '~/pages/admin/menu/modals/AddMenu2.vue'
 import MenuSettings from '~/pages/admin/menu/modals/MenuSettings.vue'
 import { useAdminMenu } from '~/stores/admin'
 const adminMenu = useAdminMenu()

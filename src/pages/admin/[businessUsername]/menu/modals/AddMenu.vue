@@ -22,7 +22,7 @@
         :disabled="isSaveButtonDisabled"
         @click="addMenu"
       >
-        Kaydet ccc
+        Kaydet
       </button>
       <button class="btn" @click="onClose">
         Vazgeç

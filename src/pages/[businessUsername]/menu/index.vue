@@ -19,11 +19,10 @@
   </div>
 </template>
 <script setup lang="ts">
+import MenuChips from './components//MenuChips.vue'
 import { useUserMenu } from '~/stores/user'
 import { useUserMenu2 } from '~/stores/user/menu'
 import { useAuthStore } from '~/stores/auth'
-import MenuChips from './components//MenuChips.vue'
-
 
 const route = useRoute()
 const { businessUsername } = route.params
@@ -33,7 +32,6 @@ const auth = useAuthStore()
 
 const userMenu = computed(() => menu.getMenu)
 const userMenu2 = computed(() => menu2.getMenu)
-
 
 const businessInfo = computed(() => menu2.getBusinessInfo)
 

@@ -28,8 +28,9 @@ class MenuService extends BaseService {
     return result
   }
 
-  async update({ data, menuId }) {
-    const result = super.put(`/${menuId}`, data)
+  async update({ data, id }) {
+    console.log(data,'idstore')
+    const result = super.put(`/${id}`, data)
     return result
   }
 }

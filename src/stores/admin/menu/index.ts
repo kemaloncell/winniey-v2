@@ -13,8 +13,7 @@ export const useAdminMenu2 = defineStore({
     businessInfo: null,
   }),
   getters: {
-    getMenu: state =>
-      state.filteredMenu.length > 0 ? state.filteredMenu : state.menu,
+    getMenu: state => state.menu,
     getFilteredMenu: state => state.filteredMenu,
     getMenus: state => state.menus,
     getSelectedMenu: state => state.selectedMenu,
@@ -117,49 +116,67 @@ export const useAdminMenu2 = defineStore({
       const businessUsername = route.params.businessUsername
       const allInfo = await menuService.getAll(businessUsername)
       const { menu, menus, business } = allInfo.data
-      console.log(allInfo)
       this.menu = menu.Categories
       this.menus = menus
       this.businessInfo = business
-      console.log(this.menus)
+      NProgress.done()
+      return this.menu
+    },
+
+    async fetchSelectedMenu(menuID) {
+      NProgress.start()
+      const { data } = await menuService.getById(menuID)
+      this.menu = data.Categories
       NProgress.done()
       return this.menu
     },
 
     async addMenu(payload) {
-      const authStore = useAuthStore()
-      console.log(payload, 'payload')
-      console.log(authStore.currentBusiness, 'authStore')
-      const result = await menuService.createMenu({
-        businessID: authStore.currentBusiness?.id,
-        name: payload,
-      })
-      if (result)
-        this.menus.push(result.data)
+      try {
+        const businessUsername = this.businessInfo?.username
+        const result = await menuService.createMenu({
+          ...payload,
+          businessUsername,
+        })
+        if (result)
+          this.menus.push(result.data)
+      }
+      catch (error) {
+        console.log(error)
+      }
     },
 
     async updateMenu(payload) {
-      const original = await DataStore.query(Menu, payload.menu.id)
-      const result = await DataStore.save(
-        Menu.copyOf(original, (updated) => {
-          updated.name = payload.update.name
-          updated.description = payload.update.description
-        }),
-      )
-
-      if (result) {
+      console.log(payload.menu.id, 'payload')
+      console.log(payload.update, 'payload')
+      try {
+        const result = await menuService.update({
+          id: payload.menu.id,
+          data: payload.update,
+        })
+        if (result) {
+          this.$patch((state) => {
+            const menu = state.menus.find(menu => menu.id === payload.menu.id)
+            menu.name = payload.update.name
+            menu.description = payload.update.description
+          })
+        }
+      }
+      catch (error) {
+        console.log(error)
+      }
+     /* const result = await menuService.update(payload.menu.id, payload.update)
+      console.log(result,'store')
+     if (result) {
         this.$patch((state) => {
           const menu = state.menus.find(menu => menu.id === payload.menu.id)
           menu.name = payload.update.name
           menu.description = payload.update.description
         })
-      }
+      }*/
     },
     async deleteMenu(payload) {
-      const deletedMenuObject = await DataStore.query(Menu, payload.menu.id)
-
-      const result = await DataStore.delete(deletedMenuObject)
-
+      const result = await menuService.delete(payload.menu.id)
       if (result) {
         this.$patch((state) => {
           const menu = state.menus.find(
