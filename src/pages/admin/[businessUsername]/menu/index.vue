@@ -17,7 +17,6 @@
             <carbon-menu />
           </button>
           <menu-category
-
             class="flex-1"
             :category-data="element"
             :collapse-open="isCollapseOpen"
