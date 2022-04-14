@@ -300,7 +300,25 @@ export const useAdminMenu2 = defineStore({
     },
 
     async deleteCategory(payload) {
-      const deleteCategoryObject = await DataStore.query(
+      try {
+        NProgress.start()
+        const result = await categoryService.delete(payload.id)
+        NProgress.done()
+        if (result) {
+          this.$patch((state) => {
+            const category = state.menu.find(
+              f => f.category.id === payload.category.id,
+            )
+            state.menu.splice(state.menu.indexOf(category), 1)
+          })
+        }
+        return result
+      }
+      catch (error) {
+        console.log(error)
+      }
+
+      /*      const deleteCategoryObject = await DataStore.query(
         MenuCategory,
         payload.category.id,
       )
@@ -316,7 +334,7 @@ export const useAdminMenu2 = defineStore({
         })
       }
 
-      return result
+      return result */
     },
 
     async deleteMenuItem(payload) {

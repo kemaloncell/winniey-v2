@@ -36,7 +36,7 @@
                 <carbon-edit class="w-8 h-5" />
               </button>
               <button
-                v-if="element.items && element.items.length === 0"
+                v-if="element.Items && element.Items.length === 0"
                 class="btn btn-sm ml-4 bg-red-500"
                 @click="onDeleteModal(element)"
               >
@@ -117,7 +117,7 @@ import draggable from 'vuedraggable'
 // Modals
 import AddCategoryModal from './components/AddCategoryModal.vue'
 import EditModal from './components/EditModal.vue'
-import DeleteModal from '~/pages/admin/menu/components/DeleteModal.vue'
+import DeleteModal from './components/DeleteModal.vue'
 import ChildAddModal from '~/pages/admin/menu/components/ChildAddModal.vue'
 import ChildEditModal from '~/pages/admin/menu/components/ChildEditModal.vue'
 import ChildDeleteModal from '~/pages/admin/menu/components/ChildDeleteModal.vue'

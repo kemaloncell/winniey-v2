@@ -8,7 +8,7 @@
         <p>
           <b>
             <u>
-              {{ selectedCategory.category && selectedCategory.category.name }}
+              {{ props.selectedCategory && props.selectedCategory.name }}
             </u>
           </b>
           adlı kategoriyi silmek istediğinizden emin misiniz?
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const props = defineProps({
   show: {
@@ -36,10 +36,10 @@ const props = defineProps({
   },
 })
 
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 const emit = defineEmits()
 const isDeleteButtonDisabled = ref(false)
-
+console.log(props.selectedCategory,'props.selectedCategory')
 const deleteCategory = async() => {
   isDeleteButtonDisabled.value = true
 

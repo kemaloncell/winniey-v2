@@ -23,8 +23,8 @@ class CategoryService extends BaseService {
     return result
   }
 
-  async delete(menuId) {
-    const result = super.delete(`/${menuId}`)
+  async delete(id) {
+    const result = super.delete(`/${id}`)
     return result
   }
 
