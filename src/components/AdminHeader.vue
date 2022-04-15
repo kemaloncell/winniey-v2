@@ -7,17 +7,14 @@
     </div>
     <div class="px-2 mx-2 navbar-center lg:flex">
       <div class="flex items-stretch">
-        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/menu">
+        <router-link class="btn btn-ghost btn-sm rounded-btn" :to="`/admin/${username}/menu`">
           Menu
         </router-link>
-        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/order">
+        <router-link class="btn btn-ghost btn-sm rounded-btn" :to="`/admin/${username}/order`">
           Order
         </router-link>
-        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/table">
+        <router-link class="btn btn-ghost btn-sm rounded-btn" :to="`/admin/${username}/table`">
           Table
-        </router-link>
-        <router-link class="btn btn-ghost btn-sm rounded-btn" to="/admin/barcode">
-          Barcode
         </router-link>
       </div>
     </div>
@@ -26,3 +23,11 @@
     </div>
   </div>
 </template>
+<script setup>
+const route = useRoute()
+
+const username = computed(() => {
+  const { businessUsername } = route.params
+  return businessUsername
+})
+</script>
