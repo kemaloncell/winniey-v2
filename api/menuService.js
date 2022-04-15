@@ -14,23 +14,19 @@ class MenuService extends BaseService {
   }
 
   async getById(menuId) {
-    const result = super.get(`/${menuId}`)
-    return result
+    return super.get(`/${menuId}`)
   }
 
   async create(data) {
-    const result = super.post('/', data)
-    return result
+    return super.post('/', data)
   }
 
   async delete(menuId) {
-    const result = super.delete(`/${menuId}`)
-    return result
+    return super.delete(`/${menuId}`)
   }
 
   async update({ data, id }) {
-    const result = super.put(`/${id}`, data)
-    return result
+    return super.put(`/${id}`, data)
   }
 }
 
