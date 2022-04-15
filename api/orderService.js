@@ -5,23 +5,23 @@ class OrderService extends BaseService {
     super('order')
   }
 
-  async getAllList(parameters) {
-    const result = super.post('/list', parameters)
+  async getOrderList(parameters) {
+    const result = await super.get('/list', parameters)
     return result
   }
 
   async create(data) {
-    const result = super.post('/', data)
+    const result = await super.post('/', data)
     return result
   }
 
   async delete(id) {
-    const result = super.delete(`/?id=${id}`)
+    const result = await super.delete(`/?id=${id}`)
     return result
   }
 
   async update({ data, id }) {
-    const result = super.put(`/?id=${id}`, data)
+    const result = await super.put(`/?id=${id}`, data)
     return result
   }
 
@@ -31,6 +31,6 @@ class OrderService extends BaseService {
   }
 }
 
-const bankService = new OrderService()
+const orderService = new OrderService()
 
-export { bankService }
+export { orderService }

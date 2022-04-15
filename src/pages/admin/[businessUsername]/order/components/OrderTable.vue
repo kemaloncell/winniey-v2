@@ -7,29 +7,24 @@
           <th>Tarih</th>
           <th>Masa</th>
           <th>Tutar</th>
-          <th class="text-center">Detay</th>
+          <th class="text-center">
+            Detay
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>24 dakika önce</td>
-          <td>A9</td>
-          <td>84 TL</td>
+        <tr v-for="order in props.orders">
+          <td>{{ order.createdAt }}</td>
+          <td>{{ order.tableId }}</td>
+          <td>{{ order.totalPrice }} TL</td>
           <td>
             <div class="flex gap-4 justify-center">
-              <button class="btn btn-sm btn-primary">Detay</button>
-              <button class="btn btn-sm btn-success">Onayla</button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>24 dakika önce</td>
-          <td>A9</td>
-          <td>84 TL</td>
-          <td>
-            <div class="flex gap-4 justify-center">
-              <button class="btn btn-sm btn-primary">Detay</button>
-              <button class="btn btn-sm btn-success">Onayla</button>
+              <button class="btn btn-sm btn-primary">
+                Detay
+              </button>
+              <button class="btn btn-sm btn-success">
+                Onayla
+              </button>
             </div>
           </td>
         </tr>
@@ -37,3 +32,11 @@
     </table>
   </div>
 </template>
+<script setup>
+const props = defineProps({
+  orders: {
+    type: Array,
+    default: () => [],
+  },
+})
+</script>
