@@ -23,18 +23,19 @@ export const useAdminMenu2 = defineStore({
   },
   actions: {
     setDraggedMenuCategory(menu) {
+
       menu.forEach((item) => {
         const currentItem = this.menu.find(
-          menuItem => menuItem.category.id === item.category.id,
+          menuItem => menuItem.id === item.id,
         )
         if (currentItem) {
-          const { category } = currentItem
+          const categoryId = currentItem.id
           const categoryIndex = menu.findIndex(
-            menuItem => menuItem.category.id === category.id,
+            menuItem => menuItem.id === currentItem.id,
           )
-          if (categoryIndex !== -1 && category.order !== categoryIndex) {
+          if (categoryIndex !== -1 && item.order !== categoryIndex) {
             this.updateCategory({
-              category,
+              categoryId,
               update: {
                 order: categoryIndex,
               },
@@ -46,7 +47,6 @@ export const useAdminMenu2 = defineStore({
     },
     search(searchText) {
       const query = searchText.trim().toLowerCase()
-      console.log(query)
       if (!query || query.length < 2) {
         this.filteredMenu = []
         return
@@ -216,7 +216,6 @@ export const useAdminMenu2 = defineStore({
         })
 
         this.$patch((state) => {
-          console.log(state.menu, 'state.menu')
           state.menu.push(result.data)
         })
 
@@ -233,18 +232,18 @@ export const useAdminMenu2 = defineStore({
         const result = await itemService.create({
           categoryId: payload.id,
           name: payload.fields.name,
-          description: payload.fields.description,
+          desc: payload.fields.desc,
           businessUsername,
         })
 
         this.$patch((state) => {
           const category = state.menu.find(
-            f => f.category.id === payload.id,
+            f => f.id === payload.id,
           )
           if (!category?.Items)
             category.Items = []
 
-          category.items.push(JSON.parse(JSON.stringify(result)))
+          category.Items.push(result.data)
         })
 
         return result
@@ -255,6 +254,7 @@ export const useAdminMenu2 = defineStore({
     },
 
     async updateCategory(payload) {
+      console.log(payload,'update pay')
       try {
         NProgress.start()
         const result = await categoryService.update({
@@ -295,6 +295,7 @@ export const useAdminMenu2 = defineStore({
             })
           })
         })
+        return result
       }
       catch (error) {
         console.log(error)
@@ -327,17 +328,14 @@ export const useAdminMenu2 = defineStore({
         NProgress.start()
         const result = await itemService.delete(payload.id)
         NProgress.done()
-        if (result) {
-          this.$patch((state) => {
-            const category = state.menu.find(
-              f => f.category.id === payload.category.id,
-            )
-            const item = category.items.find(
-              f => f.id === payload.item.id,
-            )
-            category.items.splice(category.items.indexOf(item), 1)
+        this.$patch((state) => {
+          state.menu.forEach((category) => {
+            category.Items.forEach((item) => {
+              if (item.id === payload.id)
+                category.Items.splice(category.Items.indexOf(item), 1)
+            })
           })
-        }
+        })
         return result
       }
       catch (error) {

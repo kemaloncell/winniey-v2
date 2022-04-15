@@ -172,7 +172,8 @@ const data = computed({
     return adminMenu2.getMenu
   },
   set(value) {
-    adminMenu.setDraggedMenuCategory(value)
+    console.log(value,'value')
+    adminMenu2.setDraggedMenuCategory(value)
   },
 })
 

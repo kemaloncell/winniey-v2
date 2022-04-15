@@ -107,7 +107,7 @@ const menuItemCureencies = ['TRY', 'USD', 'ROUBLE', 'EUR']
 const isSaveButtonDisabled = ref(false)
 
 watchEffect(() => (menuItemName.value = props.selectedMenuItem?.name))
-watchEffect(() => (menuItemDesc.value = props.selectedMenuItem?.description))
+watchEffect(() => (menuItemDesc.value = props.selectedMenuItem?.desc))
 watchEffect(() => (menuItemPrice.value = props.selectedMenuItem?.price))
 watchEffect(() => (menuItemCurrency.value = props.selectedMenuItem?.currency))
 watchEffect(() => (menuItemCustomPriceSymbol.value = props.selectedMenuItem?.customPriceSymbol))
@@ -125,7 +125,7 @@ const updateMenuItem = async() => {
   await adminMenu.updateMenuItem({
     update: {
       name: menuItemName.value,
-      description: menuItemDesc.value,
+      desc: menuItemDesc.value,
       price: parseFloat(menuItemPrice.value),
       currency: menuItemCurrency.value,
       customPriceSymbol: menuItemCustomPriceSymbol.value,
@@ -135,8 +135,6 @@ const updateMenuItem = async() => {
 
   onClose()
 }
-
-console.log(props.selectedMenuItem,'props.selectedMenuItem')
 
 const onClose = () => {
   isSaveButtonDisabled.value = false

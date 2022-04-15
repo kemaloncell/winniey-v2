@@ -39,7 +39,6 @@ const props = defineProps({
 const adminMenu = useAdminMenu2()
 const emit = defineEmits()
 const isDeleteButtonDisabled = ref(false)
-console.log(props.selectedCategory,'props.selectedCategory')
 const deleteCategory = async() => {
   isDeleteButtonDisabled.value = true
 

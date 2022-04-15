@@ -72,7 +72,6 @@ const selectedMenu = computed(() => {
 })
 
 watchEffect(() => {
-  console.log('selectedItemId', selectedMenu.value)
   selectedItemId.value = selectedMenu.value?.id
 })
 

@@ -73,11 +73,10 @@ const postMenuItem = async() => {
   await adminMenu.postMenuItem({
     fields: {
       name: menuItemName.value,
-      description: menuItemDesc.value,
+      desc: menuItemDesc.value,
     },
     id: props.selectedCategory?.id,
   })
-
   onClose()
 }
 const onClose = () => {
