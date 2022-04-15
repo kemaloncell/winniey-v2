@@ -3,8 +3,8 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { CognitoUser } from '@aws-amplify/auth'
 import { Auth } from '@aws-amplify/auth'
 import { DataStore } from '@aws-amplify/datastore'
-import { Business } from '~/models'
 import Cookies from 'js-cookie'
+import { Business } from '~/models'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref < CognitoUser > ({})

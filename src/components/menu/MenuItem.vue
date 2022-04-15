@@ -68,6 +68,7 @@ const menuItemImage = computed(() => {
   return `https://winniey-storage-d2iie9fdmnebxs125556-staging.s3.amazonaws.com/public/${image}`
 })
 
+
 const addToBasket = () => {
   basket.addToBasket(props.menuItemData)
 }

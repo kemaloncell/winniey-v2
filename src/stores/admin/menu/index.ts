@@ -214,14 +214,12 @@ export const useAdminMenu2 = defineStore({
           name: payload.name,
           businessUsername,
         })
-        if (result) {
-          this.$patch((state) => {
-            state.menu.push({
-              category: JSON.parse(JSON.stringify(result)),
-              items: [],
-            })
-          })
-        }
+
+        this.$patch((state) => {
+          console.log(state.menu, 'state.menu')
+          state.menu.push(result.data)
+        })
+
         return result
       }
       catch (error) {
@@ -238,17 +236,17 @@ export const useAdminMenu2 = defineStore({
           description: payload.fields.description,
           businessUsername,
         })
-        if (result) {
-          this.$patch((state) => {
-            const category = state.menu.find(
-              f => f.category.id === payload.category.id,
-            )
-            if (!category?.items)
-              category.items = []
 
-            category.items.push(JSON.parse(JSON.stringify(result)))
-          })
-        }
+        this.$patch((state) => {
+          const category = state.menu.find(
+            f => f.category.id === payload.id,
+          )
+          if (!category?.Items)
+            category.Items = []
+
+          category.items.push(JSON.parse(JSON.stringify(result)))
+        })
+
         return result
       }
       catch (error) {
@@ -264,16 +262,14 @@ export const useAdminMenu2 = defineStore({
           data: payload.update,
         })
         NProgress.done()
-        if (result) {
-          this.$patch((state) => {
-            const categoryItem = state.menu.find(
-              f => f.category.id === payload.category.id,
-            )
-            Object.entries(payload.update).forEach(([key, value]) => {
-              categoryItem.category[key] = value
-            })
+        this.$patch((state) => {
+          const categoryItem = state.menu.find(
+            f => f.id === payload.categoryId,
+          )
+          Object.entries(payload.update).forEach(([key, value]) => {
+            categoryItem[key] = value
           })
-        }
+        })
         return result
       }
       catch (error) {
@@ -312,8 +308,9 @@ export const useAdminMenu2 = defineStore({
         NProgress.done()
         if (result) {
           this.$patch((state) => {
+            console.log(state.menu, 'state.menu')
             const category = state.menu.find(
-              f => f.category.id === payload.category.id,
+              f => f.id === payload.id,
             )
             state.menu.splice(state.menu.indexOf(category), 1)
           })

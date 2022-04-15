@@ -11,7 +11,6 @@ declare module 'vue' {
     BottomNavigation: typeof import('./components/BottomNavigation.vue')['default']
     BusinessCard: typeof import('./components/menu/BusinessCard.vue')['default']
     CarbonAdd: typeof import('~icons/carbon/add')['default']
-    CarbonBarcode: typeof import('~icons/carbon/barcode')['default']
     CarbonCloudUpload: typeof import('~icons/carbon/cloud-upload')['default']
     CarbonColorPalette: typeof import('~icons/carbon/color-palette')['default']
     CarbonEdit: typeof import('~icons/carbon/edit')['default']
