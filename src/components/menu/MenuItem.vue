@@ -23,7 +23,7 @@
             </p>
             <div class="flex items-center gap-3 mt-2">
               <slot name="basket">
-                <div class="inline-block bg-secondary text-secondary-content rounded-lg flex items-center hover:bg-base-200 hover:text-base-content hover:cursor-pointer transition delay-20" @click="addToBasket">
+                <div v-if="showAddToBasket" class="inline-block bg-secondary text-secondary-content rounded-lg flex items-center hover:bg-base-200 hover:text-base-content hover:cursor-pointer transition delay-20" @click="addToBasket">
                   <carbon-add class="w-8 h-5" />
                 </div>
               </slot>
@@ -51,6 +51,8 @@
 <script setup>
 import { useCurrency } from '~/composables'
 import { useBasketStore } from '~/stores/basket'
+import { useUserMenu2 } from '~/stores/user/menu'
+
 const props = defineProps({
   menuItemData: {
     type: Object,
@@ -59,6 +61,8 @@ const props = defineProps({
 })
 
 const { getCurrency } = useCurrency()
+const userMenu = useUserMenu2()
+
 const basket = useBasketStore()
 const menuItemImage = computed(() => {
   const { images } = props.menuItemData
@@ -68,9 +72,12 @@ const menuItemImage = computed(() => {
   return `https://winniey-storage-d2iie9fdmnebxs125556-staging.s3.amazonaws.com/public/${image}`
 })
 
-
 const addToBasket = () => {
   basket.addToBasket(props.menuItemData)
 }
 
+const showAddToBasket = computed(() => {
+  const { settings } = userMenu.businessInfo || {}
+  return settings?.isBasketEnabled
+})
 </script>

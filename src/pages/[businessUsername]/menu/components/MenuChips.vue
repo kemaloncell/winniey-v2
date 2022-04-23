@@ -29,11 +29,10 @@
 import ItemListModal from './ItemListModal.vue'
 
 const isListModalShow = ref(false)
-const listModalTitle = ref("Restoranın Seçtikleri")
+const listModalTitle = ref('Restoranın Seçtikleri')
 
 const onClickChip = () => {
   isListModalShow.value = true
-  console.log('selam')
 }
 </script>
 <style>

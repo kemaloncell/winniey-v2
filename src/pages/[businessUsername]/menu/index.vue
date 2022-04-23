@@ -1,11 +1,14 @@
 <template>
   <div>
     <BusinessCard v-if="businessInfo" />
-    <MenuChips class="my-2" />
+    <!-- <MenuChips class="my-2" /> -->
+    <br>
     <div class="sticky top-0 z-10 bg-base-100">
-      <div class="flex flex-row justify-between">
-        <menu-search class="md:flex-1 md:mr-4" />
-        <user-menu-dropdown />
+      <div class="flex flex-row justify-between gap-4">
+        <menu-search class="flex-1" />
+        <user-menu-dropdown
+          v-if="isMenuDropDownVisible"
+        />
       </div>
       <MenuTabs class="my-4" :tabs="userMenu2" @tab="onChangeTab" />
     </div>
@@ -42,7 +45,7 @@ const isCollapseOpen = computed(() => {
 })
 
 const isMenuDropDownVisible = computed(() => {
-  return menu.getSelectedMenu?.id
+  return menu2.getMenus?.length > 1
 })
 
 menu.fetchMenu({ businessUsername })
@@ -59,8 +62,8 @@ export default {
       if (el) {
         el.scrollIntoView({
           behavior: 'smooth',
-          block: 'start',
-          inline: 'start',
+          block: 'center',
+          inline: 'nearest',
         })
       }
     },
