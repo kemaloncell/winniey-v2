@@ -17,9 +17,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useUserMenu } from '~/stores/user'
+import { useUserMenu2 } from '~/stores/user/menu'
 
-const userMenu = useUserMenu()
+const userMenu = useUserMenu2()
 const selectedItemId = ref(null)
 const route = useRoute()
 const { businessUsername } = route.params

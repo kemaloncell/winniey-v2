@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-0 ">
+  <div class="w-full p-0 " v-if="showAddToBasket">
     <!-- <section id="bottom-navigation" class="md:hidden block fixed inset-x-0 bottom-0 z-10 bg-white shadow"> // if shown only tablet/mobile-->
     <section id="bottom-navigation" class="block fixed inset-x-0 bottom-0 z-10 bg-base-200 navbar">
       <div id="tabs" class="flex justify-between">
@@ -19,8 +19,15 @@
 </template>
 <script setup>
 import { useBasketStore } from '~/stores/basket'
+import { useUserMenu2 } from '~/stores/user/menu'
 
 const basket = useBasketStore()
+const userMenu = useUserMenu2()
+
 const getBasket = computed(() => basket.getBasket)
 
+const showAddToBasket = computed(() => {
+  const { settings } = userMenu.businessInfo || {}
+  return settings?.isBasketEnabled
+})
 </script>
