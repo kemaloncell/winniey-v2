@@ -1,5 +1,4 @@
 import { BaseService } from './baseService'
-
 class CategoryService extends BaseService {
   constructor() {
     super('category')

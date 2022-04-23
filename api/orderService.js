@@ -1,5 +1,4 @@
 import { BaseService } from './baseService'
-
 class OrderService extends BaseService {
   constructor() {
     super('order')
