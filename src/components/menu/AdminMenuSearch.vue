@@ -9,10 +9,10 @@
 
 <script setup lang="ts">
 import { watchEffect } from '@vue/runtime-core'
-import { useAdminMenu } from '~/stores/admin'
+import { useAdminMenu2 } from '~/stores/admin/menu'
 
 const searchText = ref('')
-const adminMenu = useAdminMenu()
+const adminMenu = useAdminMenu2()
 
 watchEffect(() => {
   adminMenu.search(searchText.value)

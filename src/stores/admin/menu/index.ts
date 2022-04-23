@@ -15,7 +15,8 @@ export const useAdminMenu2 = defineStore({
     businessInfo: null,
   }),
   getters: {
-    getMenu: state => state.menu,
+    getMenu: state =>
+      state.filteredMenu.length > 0 ? state.filteredMenu : state.menu,
     getFilteredMenu: state => state.filteredMenu,
     getMenus: state => state.menus,
     getSelectedMenu: state => state.selectedMenu,
@@ -23,7 +24,6 @@ export const useAdminMenu2 = defineStore({
   },
   actions: {
     setDraggedMenuCategory(menu) {
-
       menu.forEach((item) => {
         const currentItem = this.menu.find(
           menuItem => menuItem.id === item.id,
@@ -58,16 +58,16 @@ export const useAdminMenu2 = defineStore({
         const filteredItems = menuCategory.Items.filter((item) => {
           return (
             item.name.toLowerCase().includes(query)
-                        || item.description.toLowerCase().includes(query)
           )
         })
 
         if (filteredItems.length > 0) {
-
+          filteredMenu.push({
+            ...menuCategory,
+            Items: filteredItems,
+          })
         }
       })
-
-      console.log(filteredItems)
 
       this.filteredMenu = filteredMenu
     },
@@ -254,7 +254,7 @@ export const useAdminMenu2 = defineStore({
     },
 
     async updateCategory(payload) {
-      console.log(payload,'update pay')
+      console.log(payload, 'update pay')
       try {
         NProgress.start()
         const result = await categoryService.update({

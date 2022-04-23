@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-col md:flex-row justify-end gap-2">
-      <menu-dropdown v-if="isMenuDropDownVisible" />
+      <menu-dropdown  />
       <admin-menu-search />
     </div>
     <draggable
@@ -172,7 +172,6 @@ const data = computed({
     return adminMenu2.getMenu
   },
   set(value) {
-    console.log(value,'value')
     adminMenu2.setDraggedMenuCategory(value)
   },
 })
