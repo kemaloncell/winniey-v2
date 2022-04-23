@@ -136,7 +136,7 @@ const selectedCategory = ref({})
 const selectedMenuItem = ref({})
 
 const isAddCategoryButtonVisible = computed(() => {
-  return adminMenu.getSelectedMenu?.id
+  return adminMenu2.getSelectedMenu?.id
 })
 
 const isMenuDropDownVisible = computed(() => {
