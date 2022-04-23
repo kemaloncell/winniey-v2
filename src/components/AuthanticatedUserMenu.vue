@@ -21,7 +21,6 @@ const onClickVisualSettings = () => {
   showVisualSettings.value = !showVisualSettings.value
 }
 
-
 const onLogout = () => {
   auth.logout()
 }
@@ -36,6 +35,10 @@ const onShowVisualClose = () => {
 const onClickLogin = () => {
   router.push('/login')
 }
+
+const onClickAdminPanel = () => {
+  router.push('/admin/')
+}
 </script>
 
 <template>
@@ -47,7 +50,7 @@ const onClickLogin = () => {
     >
       <div class="btn btn-circle p-3">
         <carbon-study-next class="inline-block" />
-        </div>
+      </div>
       <ul
         v-if="showMenu"
         class="menu p-4 shadow-lg bg-base-200 rounded-box absolute right-0 mt-15 z-10"
@@ -60,8 +63,8 @@ const onClickLogin = () => {
         <li @click="onClickBusinessSettings">
           <a>Ayarlar</a>
         </li>
-        <li @click="onClickVisualSettings">
-          <a>Görünüm</a>
+        <li v-if="auth.isBusiness" @click="onClickAdminPanel">
+          <a>Admin Panel</a>
         </li>
         <li @click="onLogout">
           <a> Çıkış Yap </a>

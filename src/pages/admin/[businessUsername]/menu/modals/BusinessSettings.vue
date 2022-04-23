@@ -1,7 +1,7 @@
 <template>
   <global-modal :show="show">
     <template #header>
-      İşetme Ayarları
+      İşletme Ayarları
     </template>
     <template #body>
       <div class="flex gap-4 items-center justify-center">
