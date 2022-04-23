@@ -15,7 +15,7 @@
       <tbody>
         <tr v-for="order in props.orders">
           <td>{{ order.createdAt }}</td>
-          <td>{{ order.tableId }}</td>
+          <td>{{ order.tableInfo.tableName }}</td>
           <td>{{ order.totalPrice }} TL</td>
           <td>
             <div class="flex gap-4 justify-center">
