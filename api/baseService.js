@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import RequestAuthorizationInterceptor from './interceptors/requestAuthorizationInterceptor'
 class BaseService {
   constructor(url) {
     const nodeEnv = process.env.NODE_ENV
@@ -8,8 +8,11 @@ class BaseService {
 
     this.http = axios.create({
       baseURL: `${base}/${url}`,
-      withCredentials: true,
     })
+
+    this.authorizationInterceptorId = this.http.interceptors.request.use(
+      RequestAuthorizationInterceptor,
+    )
   }
 
   async get(url, params) {

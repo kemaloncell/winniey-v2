@@ -1,5 +1,4 @@
 import { BaseService } from './baseService'
-
 class ItemService extends BaseService {
   constructor() {
     super('item')
@@ -20,6 +19,7 @@ class ItemService extends BaseService {
 
   async create(data) {
     const result = super.post('/', data)
+    console.log(result)
     return result
   }
 

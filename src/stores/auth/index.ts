@@ -3,7 +3,6 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { CognitoUser } from '@aws-amplify/auth'
 import { Auth } from '@aws-amplify/auth'
 import { DataStore } from '@aws-amplify/datastore'
-import Cookies from 'js-cookie'
 import { Business } from '~/models'
 
 export const useAuthStore = defineStore('auth', () => {
@@ -41,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function setCurrentUser() {
     try {
       user.value = await Auth.currentAuthenticatedUser()
-      Cookies.set('id_token', getIdToken.value)
+      localStorage.setItem('id_token', getIdToken.value)
       if (user.value)
         await setCurrentBusiness()
     }
@@ -91,7 +90,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     try {
       await Auth.signOut()
-      Cookies.remove('id_token')
+      localStorage.removeItem('id_token')
       user.value = {}
     }
     catch (err) {

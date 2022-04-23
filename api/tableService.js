@@ -1,5 +1,4 @@
 import { BaseService } from './baseService'
-
 class TableService extends BaseService {
   constructor() {
     super('table-info')
